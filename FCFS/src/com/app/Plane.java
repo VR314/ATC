@@ -3,7 +3,8 @@ package com.app;
 public class Plane {
     public Status status;
     private double orientation;
-    private double speed;
+    private double speed; // 1 knot = 1 nm / h, 150 knots = 40 minutes
+    private final double timePass = 5; // number of minutes that passes each refresh
     private double dist;
     private double angleFromRunway; //RADIANS - POLAR COORDS
     private double distx;
@@ -27,7 +28,7 @@ public class Plane {
         dist = 100;
     }
 
-    private void calcDist(){
+    private void calcDistXY() {
         distx = dist * Math.cos(angleFromRunway);
         disty = dist * Math.sin(angleFromRunway);
     }
@@ -42,10 +43,20 @@ public class Plane {
         return ETA;
     }
 
-    public void turn(double d){
+    /* public void turn(double d){
         orientation = d;
     }
+    */
 
+    public void move(){ //https://docs.google.com/drawings/d/1WxiXywrkvn3znghXam1VOWA2t7k-e1AVioBpkq5uCCE/edit?usp=sharing
+        double theta = 90 - orientation;
+        double move = speed / 60 * timePass;
+        double movex = move * Math.cos(theta);
+        double movey = move * Math.sin(theta);
+        dist = Math.sqrt(movex * movex + movey * movey);
+    }
+
+    //TODO
     @Override
     public String toString(){
         return "";

@@ -9,7 +9,6 @@ public class Drivable {
 
     public void addPlane(Plane p) {
         planes.addLast(p);
-
     }
 
     public void handoff(Drivable next, Plane p) {
