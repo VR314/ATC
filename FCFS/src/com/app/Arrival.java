@@ -8,10 +8,15 @@ public class Arrival {
     public Arrival() {
         planes = new LinkedList<Plane>();
     }
-
+/*
     private void refresh(Ground g) {
         Plane temp = planes.pollFirst();
         if (temp != null) {
+            for(Plane p : planes){
+                p.move();
+                p.fixOrientation();
+
+            }
 
         }
 
@@ -22,6 +27,8 @@ public class Arrival {
             }
         }
     }
+
+ */
 
     public void handoff(Plane p, Ground g) {
         Plane temp = planes.get(planes.indexOf(p));
