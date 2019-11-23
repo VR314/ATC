@@ -28,6 +28,11 @@ public class Run {
         return drive;
     }
 
+    /**
+     *
+     * @param out
+     * @return Scanner.nextLine();
+     */
     public static String ask(String out){
         Scanner s = new Scanner(System.in);
         System.out.print(out);

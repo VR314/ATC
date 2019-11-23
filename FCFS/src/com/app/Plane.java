@@ -8,11 +8,17 @@ public class Plane {
     private double speed; // 1 knot = 1 nm / h, 150 knots = 40 minutes
     private final double timePass = 5; // number of minutes that passes each refresh
     private double dist;
-    private double angleFromRunway; //RADIANS - POLAR COORDS
-    private double distx; //in cartesian
-    private double disty; //in cartesian
-    private double[] meteredGateR; //r = 35
-    private double[] meteredGateD; //C -> cartesian
+    private double angleFromRunway; //DEGREES
+    private double x; //in cartesian
+    private double y; //in cartesian
+    private GATE mGate;
+    private enum GATE { // degrees = 180 + num
+        NORTH,
+        EAST,
+        SOUTH,
+        WEST,
+    }
+
 
     public Plane() {
         status = Status.AIRSPACE;
@@ -20,37 +26,34 @@ public class Plane {
     }
 
     private void spawn(){
-         angleFromRunway = Math.toRadians(Math.random() * 360);
+        angleFromRunway = (Math.random() * 180.0);
         orientation = 0 - angleFromRunway;
+        if(angleFromRunway > 270 || angleFromRunway < 90){
+            mGate = GATE.NORTH;
+        } else {
+            mGate = GATE.SOUTH;
+        }
         speed = 100;
         dist = 100;
-        distx = dist * Math.cos(angleFromRunway);
-        disty = dist * Math.sin(angleFromRunway);
-        if(this.angleFromRunway > Math.PI){
-            meteredGateR = new double[]{Math.PI * 1.5, 35};
-            meteredGateD = new double[]{35* Math.cos(meteredGateR[0]), 35 * Math.sin(meteredGateR[0])};
-        } else {
-            meteredGateR = new double[]{Math.PI * 0.5 , 35};
-            meteredGateD = new double[]{35* Math.cos(meteredGateR[0]), 35 * Math.sin(meteredGateR[0])};
-        }
-    }
-
-    private void calcDistXY() {
-        distx = dist * Math.cos(angleFromRunway);
-        disty = dist * Math.sin(angleFromRunway);
+        x = dist * Math.cos(angleFromRunway);
+        y = dist * Math.sin(angleFromRunway);
     }
 
     private void fixOrientation() {
-        orientation = -1.0/calcRotationAngle(meteredGateD, new double[]{distx, disty});
-    }
-
-    private double calcRotationAngle(double[] centerPt, double[] targetPt)
-    {
-        double theta = Math.atan2(targetPt[1] - centerPt[1], targetPt[0] - centerPt[0]);
-
-        theta += Math.PI/2.0;
-
-        return theta;
+        if(mGate == GATE.NORTH) {
+            double delta_y = y - 35;
+            orientation = angleOf(new Point((int)x,(int)y), new Point(0,35));
+        } else if(mGate == GATE.SOUTH) {
+            double delta_y = y + 35;
+            orientation = angleOf(new Point((int)x,(int)y), new Point(0,35));
+        }
+        while(orientation < 0){
+            orientation += 360;
+        }
+        while (orientation>360){
+            orientation -= 360;
+        }
+        orientation += 90;
     }
     //TODO
     public double getETA() {
@@ -63,24 +66,32 @@ public class Plane {
     }
     */
 
-    //TODO - verify coords after calc (goes negative sometimes)
     private void move(){ //https://docs.google.com/drawings/d/1WxiXywrkvn3znghXam1VOWA2t7k-e1AVioBpkq5uCCE/edit?usp=sharing
         fixOrientation();
-        calcDistXY();
-        double theta = 90 - orientation;
-        double move = speed / 60 * timePass;
-        double movex = move * Math.cos(theta);
-        double movey = move * Math.sin(theta);
-        dist = dist - Math.sqrt(movex * movex + movey * movey);
+        final double move = speed / 60 * timePass;
+        x += Math.cos(orientation) * move;
+        y += Math.sin(orientation) * move;
 
+    }
+
+    private double angleOf(Point p1, Point p2) {
+        final double deltaY = (p2.y - p1.y);
+        final double deltaX = (p2.x - p1.x);
+        final double result = Math.toDegrees(Math.atan2(deltaY, deltaX));
+        return (result < 0) ? (360d + result) : result;
     }
 
     public void paint(Graphics2D g) throws InterruptedException {
         move();
-        g.drawRect((int)distx, (int)disty, 10, 10);
-        g.drawLine((int)distx, (int) disty, (int)meteredGateD[0], (int)meteredGateD[1]);
-        Thread.sleep(1500);
-        System.out.println(Math.toDegrees(angleFromRunway) + "d, " + dist + "nm   " + Math.toDegrees(orientation));
+        g.drawRect((int) x, (int) y, 10, 10);
+        if(mGate == GATE.NORTH) {
+            g.drawLine((int) x, (int) y, 0, 35);
+        } else if(mGate == GATE.SOUTH){
+            g.drawLine((int) x, (int) y, 0, -35);
+        }
+
+        Thread.sleep(250);
+        System.out.println(x + ", " + y + "   " + (orientation));
     }
 
     //TODO
