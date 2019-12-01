@@ -33,7 +33,7 @@ public class Plane {
         } else {
             mGate = GATE.SOUTH;
         }
-        speed = 100;
+        speed = 10;
         dist = 100;
         x = dist * Math.cos(angleFromRunway);
         y = dist * Math.sin(angleFromRunway);
@@ -47,14 +47,16 @@ public class Plane {
             double delta_y = y + 35;
             orientation = angleOf(new Point((int)x,(int)y), new Point(0,35));
         }
+        orientation += 90;
         while(orientation < 0){
             orientation += 360;
         }
         while (orientation>360){
             orientation -= 360;
         }
-        orientation += 90;
+
     }
+
     //TODO
     public double getETA() {
         double ETA = 0.0;
@@ -65,12 +67,12 @@ public class Plane {
         orientation = d;
     }
     */
-
+        //TODO: THIS DOESNT WORK
     private void move(){ //https://docs.google.com/drawings/d/1WxiXywrkvn3znghXam1VOWA2t7k-e1AVioBpkq5uCCE/edit?usp=sharing
         fixOrientation();
         final double move = speed / 60 * timePass;
-        x += Math.cos(orientation) * move;
-        y += Math.sin(orientation) * move;
+        x += Math.cos(Math.toRadians(orientation)) * move;
+        y += Math.sin(Math.toRadians(orientation)) * move;
 
     }
 
@@ -90,7 +92,7 @@ public class Plane {
             g.drawLine((int) x, (int) y, 0, -35);
         }
 
-        Thread.sleep(250);
+        Thread.sleep(10);
         System.out.println(x + ", " + y + "   " + (orientation));
     }
 
