@@ -8,15 +8,17 @@ public class Run {
     public static void main(String[] args) throws InterruptedException {
         LinkedList<Drivable> drive = setAirport();
         ArrayList<Plane> planes = new ArrayList<Plane>();
-        //for(int i = 0; i< 10; i++){
-            planes.add(new Plane());
-
         JFrame f = new JFrame();
         Panel p = new Panel();
         p.setPlanes(planes);
         f.setSize(500,500);
         f.add(p);
         f.setVisible(true);
+        for(int i = 0; i< 10; i++) {
+            p.addPlane(new Plane());
+            Thread.sleep((1000));
+        }
+
         //Thread.sleep(10000);
         //p.addPlane(new Plane());
     }

@@ -22,21 +22,31 @@ public class Plane {
 
     public Plane() {
         status = Status.AIRSPACE;
+        angleFromRunway = (Math.random() * 360);
+        spawn();
+    }
+
+    public Plane(double a){
+        status = Status.AIRSPACE;
+        angleFromRunway = a;
         spawn();
     }
 
     private void spawn(){
-        angleFromRunway = (Math.random() * 180.0);
         orientation = 0 - angleFromRunway;
-        if(angleFromRunway > 270 || angleFromRunway < 90){
-            mGate = GATE.NORTH;
-        } else {
+        while(angleFromRunway < 0){
+            angleFromRunway += 360;
+        }
+        System.out.println(angleFromRunway);
+        if(angleFromRunway > 180){
             mGate = GATE.SOUTH;
+        } else {
+            mGate = GATE.NORTH;
         }
         speed = 10;
         dist = 100;
-        x = dist * Math.cos(angleFromRunway);
-        y = dist * Math.sin(angleFromRunway);
+        x = dist * Math.cos(Math.toRadians(angleFromRunway));
+        y = dist * Math.sin(Math.toRadians(angleFromRunway));
     }
 
     private void fixOrientation() {
@@ -54,6 +64,7 @@ public class Plane {
         while (orientation>360){
             orientation -= 360;
         }
+        angleFromRunway = 0 - orientation;
 
     }
 
@@ -71,8 +82,8 @@ public class Plane {
     private void move(){ //https://docs.google.com/drawings/d/1WxiXywrkvn3znghXam1VOWA2t7k-e1AVioBpkq5uCCE/edit?usp=sharing
         fixOrientation();
         final double move = speed / 60 * timePass;
-        x += Math.cos(Math.toRadians(orientation)) * move;
-        y += Math.sin(Math.toRadians(orientation)) * move;
+        x += Math.cos(Math.toRadians(orientation - 90)) * move;
+        y += Math.sin(Math.toRadians(orientation - 90)) * move;
 
     }
 
@@ -85,6 +96,7 @@ public class Plane {
 
     public void paint(Graphics2D g) throws InterruptedException {
         move();
+        g.drawOval(0,0,10,10);
         g.drawRect((int) x, (int) y, 10, 10);
         if(mGate == GATE.NORTH) {
             g.drawLine((int) x, (int) y, 0, 35);
@@ -93,7 +105,7 @@ public class Plane {
         }
 
         Thread.sleep(10);
-        System.out.println(x + ", " + y + "   " + (orientation));
+        //System.out.println(x + ", " + y + "   " + (orientation));
     }
 
     //TODO
