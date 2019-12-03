@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 public class Ground {
     private LinkedList<Plane> planes;
+    private LinkedList<Drivable> ways;
 
     public Ground() {
         planes = new LinkedList<Plane>();

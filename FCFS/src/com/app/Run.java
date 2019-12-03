@@ -1,39 +1,32 @@
 package com.app;
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Run {
     public static void main(String[] args) throws InterruptedException {
-        LinkedList<Drivable> drive = setAirport();
+        Airport airport = new Airport();
         ArrayList<Plane> planes = new ArrayList<Plane>();
         JFrame f = new JFrame();
-        Panel p = new Panel();
-        p.setPlanes(planes);
+        Airspace a = new Airspace();
+        a.setPlanes(planes);
         f.setSize(500,500);
-        f.add(p);
+        f.add(a);
         f.setVisible(true);
         for(int i = 0; i< 10; i++) {
-            p.addPlane(new Plane());
+            a.addPlane(new Plane());
             Thread.sleep((1000));
         }
 
         //Thread.sleep(10000);
-        //p.addPlane(new Plane());
+        //a.addPlane(new Plane());
     }
 
-    //TODO
-    public static LinkedList<Drivable> setAirport(){
-        LinkedList<Drivable> drive = new LinkedList<Drivable>();
-
-        return drive;
-    }
 
     /**
      *
-     * @param out
-     * @return Scanner.nextLine();
+     * @param out the String to be printed.
+     * @return Scanner.nextLine(); the response to the question
      */
     public static String ask(String out){
         Scanner s = new Scanner(System.in);
