@@ -12,14 +12,25 @@ public class Airspace extends JPanel {
         planes = new ArrayList<Plane>();
     }
 
+    /**
+     * setter for planes List
+     */
     public void setPlanes(ArrayList<Plane> planes){
         this.planes = planes;
     }
 
+    /**
+     * adds a plane to the planes List of the airspace
+     * @param p the plane to be added
+     */
     public void addPlane(Plane p){
         this.planes.add(p);
     }
 
+    /**
+     * overrided method from the JPanel class
+     * draws each plane in the airspace
+     */
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
