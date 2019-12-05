@@ -14,7 +14,9 @@ public class Airport extends JPanel {
     //TODO:
     //  -implement Graphics, way for planes to move
 
-
+    /**
+     * setter for <code>parts</code>
+     */
     public void setParts(ArrayList<Drivable> d){
         parts = d;
     }
