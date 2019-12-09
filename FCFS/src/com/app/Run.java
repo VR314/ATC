@@ -2,7 +2,7 @@ package com.app;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+//WORKS ON SCHOOL PC
 public class Run {
     public static void main(String[] args) throws InterruptedException {
         Airport airport = new Airport();
