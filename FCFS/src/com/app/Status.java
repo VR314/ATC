@@ -1,13 +1,22 @@
 package com.app;
 
 public enum Status {
-    AIRSPACE, //in airspace
-    MG, //at metered gates
-    APPR, //approach
-    LAND, //landing
-    TX, //taxiway
-    RMP, //ramp
-    GATE, //gate
-    TKOFF, //taking off
-    OUT //taken off, out of control, done
+    /**in airspace */
+    AIRSPACE,
+    /**at metered gates */
+    MG,
+    /**approach */
+    APPR,
+    /**landing */
+    LAND,
+    /**taxiway */
+    TX,
+    /**main taxiway */
+    MTX,
+    /**gate */
+    GATE,
+    /**taking off */
+    TKOFF,
+    /**taken off, out of control, done */
+    OUT
 }

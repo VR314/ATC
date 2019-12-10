@@ -35,12 +35,12 @@ public class Arrival {
      * @param g the Ground object to 'hand off' the plane to
      * @return modified Ground object with the added plane
     */
-    public Ground handoff(Plane p, Ground g) {
+    public Airport handoff(Plane p, Airport a) {
         Plane temp = planes.get(planes.indexOf(p));
         planes.remove(p);
-        Ground nGround = g;
-        nGround.addPlane(temp);
-        return nGround;
+        Airport airport = a;
+        a.addPlane(temp);
+        return a;
     }
 
     /**
