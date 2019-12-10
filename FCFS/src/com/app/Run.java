@@ -7,16 +7,25 @@ public class Run {
     public static void main(String[] args) throws InterruptedException {
         Airport airport = new Airport();
         ArrayList<Plane> planes = new ArrayList<Plane>();
+
+        /*
         JFrame f = new JFrame();
         Airspace a = new Airspace();
         a.setPlanes(planes);
         f.setSize(500,500);
         f.add(a);
+
         f.setVisible(true);
         for(int i = 0; i< 10; i++) {
             a.addPlane(new Plane());
             Thread.sleep((1000));
-        }
+        } */
+
+        JFrame air = new JFrame();
+        air.setSize(500,500);
+        air.add(airport);
+        air.setVisible(true);
+
 
         //Thread.sleep(10000);
         //a.addPlane(new Plane());

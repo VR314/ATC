@@ -12,6 +12,8 @@ public class Plane {
     private double x; //in cartesian
     private double y; //in cartesian
     private GATE mGate;
+    private Drivable current;
+    private int part;
     private enum GATE { // degrees = 180 + num
         NORTH,
         EAST,
@@ -131,6 +133,14 @@ public class Plane {
             //System.out.println(x + ", " + y + "   " + (orientation));
 
         }
+    }
+
+    public int getPart(){
+        return part;
+    }
+
+    public void setPart(int p){
+        this.part = p;
     }
 
     //TODO
