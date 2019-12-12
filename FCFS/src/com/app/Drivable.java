@@ -27,7 +27,7 @@ public class Drivable {
         } else {
             g2d.setColor(Color.gray);
         }
-
+    //test
         g2d.setColor(Color.red);
         g2d.fillOval(target[0], target[0], 3, 3);
 
