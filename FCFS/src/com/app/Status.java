@@ -1,22 +1,40 @@
 package com.app;
 
 public enum Status {
-    /**in airspace */
+    /**
+     * in airspace
+     */
     AIRSPACE,
-    /**at metered gates */
+    /**
+     * at metered gates
+     */
     MG,
-    /**approach */
+    /**
+     * approach
+     */
     APPR,
-    /**landing */
+    /**
+     * landing
+     */
     LAND,
-    /**taxiway */
+    /**
+     * taxiway
+     */
     TX,
-    /**main taxiway */
+    /**
+     * main taxiway
+     */
     MTX,
-    /**gate */
+    /**
+     * gate
+     */
     GATE,
-    /**taking off */
+    /**
+     * taking off
+     */
     TKOFF,
-    /**taken off, out of control, done */
+    /**
+     * taken off, out of control, done
+     */
     OUT
 }

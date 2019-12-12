@@ -16,6 +16,7 @@ public class Plane {
     private GATE mGate;
     private Drivable current;
     private int[] target;
+
     private enum GATE { // degrees = 180 + num
         NORTH,
         SOUTH,
@@ -30,7 +31,7 @@ public class Plane {
         spawn();
     }
 
-    public Plane(double a){
+    public Plane(double a) {
         status = Status.AIRSPACE;
         angleFromRunway = a;
         spawn();
@@ -39,13 +40,13 @@ public class Plane {
     /**
      * sets position and the metered gate the plane is scheduled to fly to
      */
-    private void spawn(){
+    private void spawn() {
         orientation = 0 - angleFromRunway;
-        while(angleFromRunway < 0){
+        while (angleFromRunway < 0) {
             angleFromRunway += 360;
         }
         System.out.println(angleFromRunway);
-        if(angleFromRunway < 180){
+        if (angleFromRunway < 180) {
             mGate = GATE.NORTH;
         } else {
             mGate = GATE.SOUTH;
@@ -56,9 +57,9 @@ public class Plane {
         y = dist * Math.sin(Math.toRadians(angleFromRunway));
     }
 
-    public void changeStatus(Status s){
+    public void changeStatus(Status s) {
         this.status = s;
-        if(s == Status.LAND){
+        if (s == Status.LAND) {
             this.target = airport.parts.get(0).target;
         }
 
@@ -68,16 +69,16 @@ public class Plane {
      * sets the orientation towards each metered gate
      */
     private void fixOrientation() {
-        if(mGate == GATE.NORTH) {
-            orientation = angleOf(new Point((int)x,(int)y), new Point(0,35));
-        } else if(mGate == GATE.SOUTH) {
-            orientation = angleOf(new Point((int)x,(int)y), new Point(0,-35));
+        if (mGate == GATE.NORTH) {
+            orientation = angleOf(new Point((int) x, (int) y), new Point(0, 35));
+        } else if (mGate == GATE.SOUTH) {
+            orientation = angleOf(new Point((int) x, (int) y), new Point(0, -35));
         }
         orientation += 90;
-        while(orientation < 0){
+        while (orientation < 0) {
             orientation += 360;
         }
-        while (orientation>360){
+        while (orientation > 360) {
             orientation -= 360;
         }
         angleFromRunway = 0 - orientation;
@@ -99,18 +100,17 @@ public class Plane {
     /**
      * changes position of the plane using the angle of orientation and speed
      */
-    private void move(){ //https://docs.google.com/drawings/d/1WxiXywrkvn3znghXam1VOWA2t7k-e1AVioBpkq5uCCE/edit?usp=sharing
+    private void move() { //https://docs.google.com/drawings/d/1WxiXywrkvn3znghXam1VOWA2t7k-e1AVioBpkq5uCCE/edit?usp=sharing
         fixOrientation();
         final double move = speed / 60 * 5; // 5 = timePass
         x += Math.cos(Math.toRadians(orientation - 90)) * move;
         y += Math.sin(Math.toRadians(orientation - 90)) * move;
-        if(Math.abs(this.y) - 35 < 1 && Math.abs(this.x) < 1){
+        if (Math.abs(this.y) - 35 < 1 && Math.abs(this.x) < 1) {
             status = Status.MG;
         }
     }
 
     /**
-     *
      * @param p1 source point
      * @param p2 target point
      * @return the angle between the source and target
@@ -124,6 +124,7 @@ public class Plane {
 
     /**
      * paints the plane in its position
+     *
      * @throws InterruptedException obligatory due to <code>Thread.sleep()</code> command
      */
     public void paint(Graphics2D g) throws InterruptedException {
@@ -148,7 +149,7 @@ public class Plane {
 
     //TODO
     @Override
-    public String toString(){
+    public String toString() {
         return "";
     }
 }

@@ -1,6 +1,6 @@
 package com.app;
+
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,26 +23,21 @@ public class Run {
         } */
 
         JFrame air = new JFrame();
-        air.setSize(500,500);
+        air.setSize(500, 500);
         air.add(airport);
         air.setVisible(true);
         air.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        while(true){
-            Thread.sleep(100);
-            System.out.println(MouseInfo.getPointerInfo().getLocation());
-        }
         //Thread.sleep(10000);
         //a.addPlane(new Plane());
     }
 
 
     /**
-     *
      * @param out the String to be printed.
      * @return Scanner.nextLine(); the response to the question
      */
-    public static String ask(String out){
+    public static String ask(String out) {
         Scanner s = new Scanner(System.in);
         System.out.print(out);
         return s.nextLine();
