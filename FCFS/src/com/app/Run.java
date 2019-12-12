@@ -1,8 +1,9 @@
 package com.app;
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-//WORKS ON SCHOOL PC
+
 public class Run {
     public static void main(String[] args) throws InterruptedException {
         Airport airport = new Airport();
@@ -25,8 +26,12 @@ public class Run {
         air.setSize(500,500);
         air.add(airport);
         air.setVisible(true);
+        air.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
+        while(true){
+            Thread.sleep(100);
+            System.out.println(MouseInfo.getPointerInfo().getLocation());
+        }
         //Thread.sleep(10000);
         //a.addPlane(new Plane());
     }

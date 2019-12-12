@@ -4,6 +4,8 @@ package com.app;
 import java.awt.*;
 
 public class Plane {
+    public int id;
+    private Airport airport;
     public Status status;
     private double orientation;
     private double speed; // 1 knot = 1 nm / h, 150 knots = 40 minutes
@@ -13,12 +15,10 @@ public class Plane {
     private double y; //in cartesian
     private GATE mGate;
     private Drivable current;
-    private int part;
+    private int[] target;
     private enum GATE { // degrees = 180 + num
         NORTH,
-        EAST,
         SOUTH,
-        WEST,
     }
 
     //TODO:
@@ -54,6 +54,14 @@ public class Plane {
         dist = 100;
         x = dist * Math.cos(Math.toRadians(angleFromRunway));
         y = dist * Math.sin(Math.toRadians(angleFromRunway));
+    }
+
+    public void changeStatus(Status s){
+        this.status = s;
+        if(s == Status.LAND){
+            this.target = airport.parts.get(0).target;
+        }
+
     }
 
     /**
@@ -131,17 +139,12 @@ public class Plane {
 
             Thread.sleep(20);
             //System.out.println(x + ", " + y + "   " + (orientation));
+        } else {
+
 
         }
     }
 
-    public int getPart(){
-        return part;
-    }
-
-    public void setPart(int p){
-        this.part = p;
-    }
 
     //TODO
     @Override

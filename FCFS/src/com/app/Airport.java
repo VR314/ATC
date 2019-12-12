@@ -11,6 +11,8 @@ public class Airport extends JPanel {
 
     public Airport(){
         parts = new ArrayList<Drivable>();
+        Runway r = new Runway();
+        parts.add(r);
         planes = new ArrayList<Plane>();
     }
 
@@ -30,6 +32,7 @@ public class Airport extends JPanel {
 
     @Override
     //HARD CODED AIRPORT
+    //TODO: MAKE COORDS FROM <DRIVABLE>S
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
@@ -59,6 +62,10 @@ public class Airport extends JPanel {
         g2d.draw(new Rectangle2D.Double(50, 237.5, 50, 50));
         g2d.draw(new Rectangle2D.Double(50, 287.5, 50, 50));
         g2d.draw(new Rectangle2D.Double(50, 337.5, 50, 50));
+
+        g2d.setColor(Color.blue);
+        g2d.fillOval(325,250,10,10);
+
         repaint();
     }
 
