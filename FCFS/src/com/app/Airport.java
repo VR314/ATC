@@ -49,8 +49,10 @@ public class Airport extends JPanel {
         parts.get(0).paint(g2d);
 
         //TAXIWAYS // OFF/ON RAMPS OF RUNWAY
+        //g2d.setColor(Color.gray);
+        //g2d.fillRect(225, 50, 75, 25);
+        parts.get(1).paint(g2d);
         g2d.setColor(Color.gray);
-        g2d.fillRect(225, 50, 75, 25);
         g2d.fillRect(225, 375, 75, 25);
 
         //TAXIWAY

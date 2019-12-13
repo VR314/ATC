@@ -10,9 +10,10 @@ public class Taxiway extends Drivable {
     public Rectangle2D rect;
      */
 
-    public Taxiway(Rectangle2D rect, int[] start, int[] target) {
+    public Taxiway(Rectangle2D rectangle, int[] start, int[] tar) {
         full = false;
-        this.target = target;
-        this.rect = rect;
+        this.target = tar;
+        this.rect = rectangle;
+        this.start = start;
     }
 }

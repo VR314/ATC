@@ -22,18 +22,19 @@ public class Drivable {
     }
 
     public void paint(Graphics2D g2d) {
+
         if (this.getClass().getName().equals("com.app.Runway")) {
             g2d.setColor(Color.black);
         } else {
             g2d.setColor(Color.gray);
         }
-    //test
+        g2d.fill(rect);
+
         g2d.setColor(Color.red);
         g2d.fillOval(target[0], target[0], 3, 3);
 
         g2d.setColor(Color.green);
         g2d.fillOval(start[0], start[0], 3, 3);
 
-        g2d.fill(rect);
     }
 }
