@@ -14,7 +14,7 @@ public class Airport extends JPanel {
         parts = new ArrayList<Drivable>();
         Runway r = new Runway();
         parts.add(r);
-        Taxiway un = new Taxiway(new Rectangle2D.Double(225, 50, 75, 25), new int[]{300, 63}, new int[]{230,});
+        Taxiway un = new Taxiway(new Rectangle2D.Double(225, 50, 75, 25), new int[]{300, 50}, new int[]{230,50});
         parts.add(un);
 
 
@@ -52,6 +52,7 @@ public class Airport extends JPanel {
         //g2d.setColor(Color.gray);
         //g2d.fillRect(225, 50, 75, 25);
         parts.get(1).paint(g2d);
+        g2d.fillOval(325,63, 20, 20);
         g2d.setColor(Color.gray);
         g2d.fillRect(225, 375, 75, 25);
 

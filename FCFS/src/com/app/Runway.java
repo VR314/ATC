@@ -13,8 +13,8 @@ public class Runway extends Drivable {
 
     public Runway() {
         full = false;
-        start = new int[]{250, 60};
-        target = new int[]{250, 250};
+        start = new int[]{330, 60};
+        target = new int[]{330, 435};
         rect = new Rectangle2D.Double(300, 50, 75, 350); //TODO: REMOVE HARDCODED COORDS - ALL MUST BE SET IN RUN CLASS
     }
 }

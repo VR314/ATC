@@ -27,7 +27,7 @@ public class Run {
         air.add(airport);
         air.setVisible(true);
         air.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        System.out.println("dog");
         //Thread.sleep(10000);
         //a.addPlane(new Plane());
     }
