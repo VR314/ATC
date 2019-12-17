@@ -36,7 +36,6 @@ public class Drivable {
 
         g2d.setColor(Color.red);
         g2d.fillOval(target[0], target[1], 5, 5);
-        System.out.println("printed red at" + target[0] + " " + target[1]);
 
     }
 }
