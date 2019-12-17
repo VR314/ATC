@@ -30,11 +30,13 @@ public class Drivable {
         }
         g2d.fill(rect);
 
-        g2d.setColor(Color.red);
-        g2d.fillOval(target[0], target[1], 3, 3);
 
         g2d.setColor(Color.green);
-        g2d.fillOval(start[0], start[1], 3, 3);
+        g2d.fillOval(start[0], start[1], 5, 5);
+
+        g2d.setColor(Color.red);
+        g2d.fillOval(target[0], target[1], 5, 5);
+        System.out.println("printed red at" + target[0] + " " + target[1]);
 
     }
 }
