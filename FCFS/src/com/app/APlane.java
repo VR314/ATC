@@ -3,6 +3,11 @@ package com.app;
 
 import java.awt.*;
 
+enum GATE { // degrees = 180 + num
+    NORTH,
+    SOUTH,
+}
+
 public class APlane extends Plane {
 
     private double dist; //TODO: even needed?
@@ -28,7 +33,7 @@ public class APlane extends Plane {
     /**
      * sets position and the metered gate the plane is scheduled to fly to
      */
-    private void spawn() {
+    public void spawn() {
         orientation = 0 - angleFromRunway;
         while (angleFromRunway < 0) {
             angleFromRunway += 360;
@@ -43,6 +48,31 @@ public class APlane extends Plane {
         dist = 100;
         x = dist * Math.cos(Math.toRadians(angleFromRunway));
         y = dist * Math.sin(Math.toRadians(angleFromRunway));
+    }
+
+    /**
+     * paints the plane in its position
+     *
+     * @throws InterruptedException obligatory due to <code>Thread.sleep()</code> command
+     */
+    @Override
+    public void paint(Graphics2D g) throws InterruptedException {
+        if (status == Status.AIRSPACE) {
+            move();
+            g.drawOval((int) x, (int) y, 5, 5);
+            //draws a line to target for now... TODO: remove eventually
+            if (mGate == GATE.NORTH) {
+                g.drawLine((int) x, (int) y, 0, 35);
+            } else if (mGate == GATE.SOUTH) {
+                g.drawLine((int) x, (int) y, 0, -35);
+            }
+
+            Thread.sleep(20);
+            //System.out.println(x + ", " + y + "   " + (orientation));
+        } else {
+
+
+        }
     }
 
     /**
@@ -78,19 +108,6 @@ public class APlane extends Plane {
         }
     }
 
-
-    //TODO
-    /*
-    public double getETA() {
-        double ETA = 0.0; //calculate ETA based on queue and
-        return ETA;
-    }
-
-     public void turn(double d){
-        orientation = d; //no sharp turns, gradual, slow turns
-    }
-    */
-
     /**
      * @param p1 source point
      * @param p2 target point
@@ -103,38 +120,21 @@ public class APlane extends Plane {
         return (result < 0) ? (360d + result) : result;
     }
 
-    /**
-     * paints the plane in its position
-     *
-     * @throws InterruptedException obligatory due to <code>Thread.sleep()</code> command
-     */
-    public void paint(Graphics2D g) throws InterruptedException {
-        if (status == Status.AIRSPACE) {
-            move();
-            g.drawOval((int) x, (int) y, 5, 5);
-            //draws a line to target for now... TODO: remove eventually
-            if (mGate == GATE.NORTH) {
-                g.drawLine((int) x, (int) y, 0, 35);
-            } else if (mGate == GATE.SOUTH) {
-                g.drawLine((int) x, (int) y, 0, -35);
-            }
-
-            Thread.sleep(20);
-            //System.out.println(x + ", " + y + "   " + (orientation));
-        } else {
-
-
-        }
-    }
-
     //TODO
     @Override
     public String toString() {
         return "";
     }
 
-    private enum GATE { // degrees = 180 + num
-        NORTH,
-        SOUTH,
+    //TODO
+    /*
+    public double getETA() {
+        double ETA = 0.0; //calculate ETA based on queue and
+        return ETA;
     }
+
+     public void turn(double d){
+        orientation = d; //no sharp turns, gradual, slow turns
+    }
+    */
 }

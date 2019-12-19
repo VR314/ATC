@@ -14,11 +14,12 @@ public class Airport extends JPanel {
         parts = new ArrayList<Drivable>();
         Runway r = new Runway();
         Taxiway un = new Taxiway(new Rectangle2D.Double(225, 375, 75, 25), new int[]{290, 385}, new int[]{200, 385});
-        Taxiway six = new Taxiway(new Rectangle2D.Double(225, 50, 75, 25), new int[]{200, 60}, new int[]{290, 60});
-        Taxiway quatre = new Taxiway(new Rectangle2D.Double(175, 100, 50, 87.5), new int[]{200, 180}, new int[]{200, 138});
-        Taxiway trois = new Taxiway(new Rectangle2D.Double(175, 187.5, 50, 100), new int[]{200, 280}, new int[]{200, 238});
         Taxiway deux = new Taxiway(new Rectangle2D.Double(175, 287.5, 50, 112.5), new int[]{200, 385}, new int[]{200, 338});
+        Taxiway trois = new Taxiway(new Rectangle2D.Double(175, 187.5, 50, 100), new int[]{200, 280}, new int[]{200, 238});
+        Taxiway quatre = new Taxiway(new Rectangle2D.Double(175, 100, 50, 87.5), new int[]{200, 180}, new int[]{200, 138});
         Taxiway cinq = new Taxiway(new Rectangle2D.Double(175, 50, 50, 50), new int[]{200, 200}, new int[]{200, 60});
+        Taxiway six = new Taxiway(new Rectangle2D.Double(225, 50, 75, 25), new int[]{200, 60}, new int[]{290, 60});
+
         parts.add(r);
         parts.add(un);
         parts.add(deux);
@@ -83,6 +84,7 @@ public class Airport extends JPanel {
         g2d.draw(new Rectangle2D.Double(50, 237.5, 50, 50));
         g2d.draw(new Rectangle2D.Double(50, 287.5, 50, 50));
         g2d.draw(new Rectangle2D.Double(50, 337.5, 50, 50));
+
 
         repaint();
     }

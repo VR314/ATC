@@ -29,7 +29,8 @@ public class Drivable {
             g2d.setColor(Color.gray);
         }
         g2d.fill(rect);
-
+        g2d.setColor(Color.blue);
+        g2d.draw(rect);
 
         g2d.setColor(Color.green);
         //g2d.fillOval(start[0], start[1], 5, 5);
