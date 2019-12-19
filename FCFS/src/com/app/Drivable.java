@@ -6,17 +6,17 @@ import java.util.LinkedList;
 
 public class Drivable {
     //public int maxPlanes; //inherits
-    public LinkedList<Plane> planes; //inherits
+    public LinkedList<APlane> planes; //inherits
     public boolean full; //inherits
     public int[] start;
     public int[] target; //inherits
     public Rectangle2D rect;
 
-    public void addPlane(Plane p) {
+    public void addPlane(APlane p) {
         planes.addLast(p);
     }
 
-    public void handoff(Drivable next, Plane p) {
+    public void handoff(Drivable next, APlane p) {
         next.addPlane(p);
         planes.remove(p);
     }
@@ -32,7 +32,7 @@ public class Drivable {
 
 
         g2d.setColor(Color.green);
-        g2d.fillOval(start[0], start[1], 5, 5);
+        //g2d.fillOval(start[0], start[1], 5, 5);
 
         g2d.setColor(Color.red);
         g2d.fillOval(target[0], target[1], 5, 5);

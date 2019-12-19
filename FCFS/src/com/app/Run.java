@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Run {
     public static void main(String[] args) throws InterruptedException {
         Airport airport = new Airport();
-        ArrayList<Plane> planes = new ArrayList<Plane>();
+        ArrayList<APlane> planes = new ArrayList<APlane>();
 
         /*
         JFrame f = new JFrame();

@@ -6,17 +6,17 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 public class Airspace extends JPanel {
-    private ArrayList<Plane> planes;
+    private ArrayList<APlane> APlanes;
 
     public Airspace() {
-        planes = new ArrayList<Plane>();
+        APlanes = new ArrayList<APlane>();
     }
 
     /**
      * setter for planes List
      */
-    public void setPlanes(ArrayList<Plane> planes) {
-        this.planes = planes;
+    public void setAPlanes(ArrayList<APlane> APlanes) {
+        this.APlanes = APlanes;
     }
 
     /**
@@ -24,8 +24,8 @@ public class Airspace extends JPanel {
      *
      * @param p the plane to be added
      */
-    public void addPlane(Plane p) {
-        this.planes.add(p);
+    public void addPlane(APlane p) {
+        this.APlanes.add(p);
     }
 
     /**
@@ -41,9 +41,9 @@ public class Airspace extends JPanel {
         g2d.setStroke(new BasicStroke(2));
         g2d.drawOval(0, 0, 10, 10);
         g2d.setStroke(new BasicStroke(1));
-        for (int i = planes.size(); i > 0; i--) {
+        for (int i = APlanes.size(); i > 0; i--) {
             try {
-                planes.get(i - 1).paint(g2d);
+                APlanes.get(i - 1).paint(g2d);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

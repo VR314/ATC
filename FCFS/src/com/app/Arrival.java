@@ -3,10 +3,10 @@ package com.app;
 import java.util.LinkedList;
 
 public class Arrival {
-    private LinkedList<Plane> planes; //newest last = remove first when processing
+    private LinkedList<APlane> APlanes; //newest last = remove first when processing
 
     public Arrival() {
-        planes = new LinkedList<Plane>();
+        APlanes = new LinkedList<APlane>();
     }
 /*
     private void refresh(Ground g) {
@@ -37,9 +37,9 @@ public class Arrival {
      * @param g the Ground object to 'hand off' the plane to
      * @return modified Ground object with the added plane
      */
-    public Airport handoff(Plane p, Airport a) {
-        Plane temp = planes.get(planes.indexOf(p));
-        planes.remove(p);
+    public Airport handoff(APlane p, Airport a) {
+        APlane temp = APlanes.get(APlanes.indexOf(p));
+        APlanes.remove(p);
         Airport airport = a;
         a.addPlane(temp);
         return a;
@@ -50,7 +50,7 @@ public class Arrival {
      *
      * @param p plane to be added
      */
-    public void addPlane(Plane p) {
-        planes.addLast(p);
+    public void addPlane(APlane p) {
+        APlanes.addLast(p);
     }
 }

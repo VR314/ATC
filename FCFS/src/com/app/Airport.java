@@ -7,24 +7,26 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Airport extends JPanel {
-    ArrayList<Plane> planes;
+    ArrayList<APlane> planes;
     ArrayList<Drivable> parts;
 
     public Airport() {
         parts = new ArrayList<Drivable>();
         Runway r = new Runway();
+        Taxiway un = new Taxiway(new Rectangle2D.Double(225, 375, 75, 25), new int[]{290, 385}, new int[]{200, 385});
+        Taxiway six = new Taxiway(new Rectangle2D.Double(225, 50, 75, 25), new int[]{200, 60}, new int[]{290, 60});
+        Taxiway quatre = new Taxiway(new Rectangle2D.Double(175, 100, 50, 87.5), new int[]{200, 180}, new int[]{200, 138});
+        Taxiway trois = new Taxiway(new Rectangle2D.Double(175, 187.5, 50, 100), new int[]{200, 280}, new int[]{200, 238});
+        Taxiway deux = new Taxiway(new Rectangle2D.Double(175, 287.5, 50, 112.5), new int[]{200, 385}, new int[]{200, 338});
+        Taxiway cinq = new Taxiway(new Rectangle2D.Double(175, 50, 50, 50), new int[]{200, 200}, new int[]{200, 60});
         parts.add(r);
-        Taxiway un = new Taxiway(new Rectangle2D.Double(225, 375, 75, 25), new int[]{290, 385}, new int[]{230,385});
         parts.add(un);
-        Taxiway deux = new Taxiway(new Rectangle2D.Double(225, 50, 75, 25), new int[] {230, 60}, new int[]{290, 60});
         parts.add(deux);
-        Taxiway trois = new Taxiway(new Rectangle2D.Double(175, 50, 50, 137.5), new int[] {200, 135}, new int[]{200, 60});
         parts.add(trois);
-        Taxiway quatre = new Taxiway(new Rectangle2D.Double(175, 187.5, 50, 100), new int[] {200, 265}, new int[]{200, 180});
         parts.add(quatre);
-        Taxiway cinq = new Taxiway(new Rectangle2D.Double(175, 287.5, 50, 100), new int[] {200, 395}, new int[]{200, 310});
         parts.add(cinq);
-        planes = new ArrayList<Plane>();
+        parts.add(six);
+        planes = new ArrayList<APlane>();
     }
 
     //TODO:
@@ -37,7 +39,7 @@ public class Airport extends JPanel {
         parts = d;
     }
 
-    public void addPlane(Plane p) {
+    public void addPlane(APlane p) {
         planes.add(p);
     }
 
@@ -57,11 +59,13 @@ public class Airport extends JPanel {
         //TAXIWAYS // OFF/ON RAMPS OF RUNWAY
         //g2d.setColor(Color.gray);
         //g2d.fillRect(225, 50, 75, 25);
-        parts.get(1).paint(g2d);
+
         parts.get(2).paint(g2d);
         parts.get(3).paint(g2d);
         parts.get(4).paint(g2d);
         parts.get(5).paint(g2d);
+        parts.get(1).paint(g2d);
+        parts.get(6).paint(g2d);
         g2d.setColor(Color.gray);
 
         //TAXIWAY

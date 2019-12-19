@@ -14,6 +14,6 @@ public class Taxiway extends Drivable {
         full = false;
         this.target = tar;
         this.rect = rectangle;
-        this.start = start;
+        //this.start = start;
     }
 }
