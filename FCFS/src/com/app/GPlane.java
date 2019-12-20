@@ -17,17 +17,20 @@ public class GPlane extends Plane {
 
     public GPlane(Airport a) {
         this.airport = a;
-        this.status = Status.LAND;
-        this.index = 0;
-
-
         spawn();
     }
 
     public void spawn() {
         this.target = airport.parts.get(0).target;
+        this.status = Status.LAND;
+        this.index = 0;
         this.x = 340;
         this.y = 0;
+        this.orientation = 180;
+    }
+
+    public void move() {
+
 
     }
 

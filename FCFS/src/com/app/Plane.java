@@ -12,5 +12,7 @@ public abstract class Plane {
 
     public abstract void spawn();
 
+    public abstract void move();
+
     public abstract void paint(Graphics2D g) throws InterruptedException;
 }

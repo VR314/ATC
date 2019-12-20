@@ -98,7 +98,7 @@ public class APlane extends Plane {
     /**
      * changes position of the plane using the angle of orientation and speed
      */
-    private void move() { //https://docs.google.com/drawings/d/1WxiXywrkvn3znghXam1VOWA2t7k-e1AVioBpkq5uCCE/edit?usp=sharing
+    public void move() { //https://docs.google.com/drawings/d/1WxiXywrkvn3znghXam1VOWA2t7k-e1AVioBpkq5uCCE/edit?usp=sharing
         fixOrientation();
         final double move = speed / 60 * 5; // 5 = timePass
         x += Math.cos(Math.toRadians(orientation - 90)) * move;
