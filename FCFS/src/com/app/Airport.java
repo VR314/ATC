@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Airport extends JPanel {
-    ArrayList<APlane> planes;
+    ArrayList<GPlane> planes;
     ArrayList<Drivable> parts;
 
     public Airport() {
@@ -27,7 +27,7 @@ public class Airport extends JPanel {
         parts.add(quatre);
         parts.add(cinq);
         parts.add(six);
-        planes = new ArrayList<APlane>();
+        planes = new ArrayList<GPlane>();
     }
 
     //TODO:
@@ -40,7 +40,7 @@ public class Airport extends JPanel {
         parts = d;
     }
 
-    public void addPlane(APlane p) {
+    public void addGPlane(GPlane p) {
         planes.add(p);
     }
 
@@ -67,16 +67,14 @@ public class Airport extends JPanel {
         parts.get(5).paint(g2d);
         parts.get(1).paint(g2d);
         parts.get(6).paint(g2d);
-        g2d.setColor(Color.gray);
-
-        //TAXIWAY
-        //g2d.fillRect(175, 50, 50, 350);
 
         //APRON
+        g2d.setColor(Color.gray);
         g2d.fillRect(100, 125, 75, 25);
         g2d.fillRect(100, 225, 75, 25);
         g2d.fillRect(100, 325, 75, 25);
 
+        //GATES
         g2d.setColor(Color.black);
         g2d.draw(new Rectangle2D.Double(50, 87.5, 50, 50));
         g2d.draw(new Rectangle2D.Double(50, 137.5, 50, 50));
@@ -85,11 +83,14 @@ public class Airport extends JPanel {
         g2d.draw(new Rectangle2D.Double(50, 287.5, 50, 50));
         g2d.draw(new Rectangle2D.Double(50, 337.5, 50, 50));
 
+        for (GPlane p : planes) {
+            p.paint(g2d);
+        }
 
-        repaint();
+        System.out.println("painted");
     }
-
 }
+
 
 class AirportThread extends Thread {
 

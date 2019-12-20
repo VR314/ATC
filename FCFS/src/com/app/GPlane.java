@@ -30,15 +30,16 @@ public class GPlane extends Plane {
     }
 
     public void move() {
-
-
+        orientation = 90 + angleOf(new Point(x, y), new Point(target[0], target[1]));
+        final double move = speed / 60 * 5; // 5 = timePass
+        x += Math.cos(Math.toRadians(orientation - 90)) * move;
+        y += Math.sin(Math.toRadians(orientation - 90)) * move;
     }
 
     @Override
-    public void paint(Graphics2D g) throws InterruptedException {
+    public void paint(Graphics2D g) {
+        move();
         g.setColor(Color.green);
         g.fillOval(x, y, 10, 10);
     }
-
-
 }

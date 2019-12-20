@@ -9,27 +9,28 @@ public class Run {
         Airport airport = new Airport();
         ArrayList<APlane> planes = new ArrayList<APlane>();
 
-        /*
+/*
         JFrame f = new JFrame();
         Airspace a = new Airspace();
-        a.setPlanes(planes);
+        a.setAPlanes(planes);
         f.setSize(500,500);
         f.add(a);
 
         f.setVisible(true);
         for(int i = 0; i< 10; i++) {
-            a.addPlane(new Plane());
+            a.addPlane(new APlane());
             Thread.sleep((1000));
-        } */
+        }
+*/
 
-        JFrame air = new JFrame();
-        air.setSize(500, 500);
-        air.add(airport);
-        air.setVisible(true);
-        air.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        System.out.println("dog");
+        JFrame frame = new JFrame();
+        frame.setSize(500, 500);
+        frame.add(airport);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Thread.sleep(10000);
-        //a.addPlane(new Plane());
+        airport.addGPlane(new GPlane(airport));
+
     }
 
 

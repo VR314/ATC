@@ -30,20 +30,13 @@ public class Arrival {
 
  */
 
-    /**
+    /** TODO: MAKEE
      * moves the planes from arrival queue to the ground queue
      *
      * @param p the plane to be 'handed off'
      * @param g the Ground object to 'hand off' the plane to
      * @return modified Ground object with the added plane
      */
-    public Airport handoff(APlane p, Airport a) {
-        APlane temp = APlanes.get(APlanes.indexOf(p));
-        APlanes.remove(p);
-        Airport airport = a;
-        a.addPlane(temp);
-        return a;
-    }
 
     /**
      * adds a plane to the end of the Arrival queue

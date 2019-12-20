@@ -1,6 +1,4 @@
 package com.app;
-
-
 import java.awt.*;
 
 enum GATE { // degrees = 180 + num
@@ -9,7 +7,6 @@ enum GATE { // degrees = 180 + num
 }
 
 public class APlane extends Plane {
-
     private double dist; //TODO: even needed?
     private double angleFromRunway; //DEGREES
     private double x; //in cartesian
@@ -70,8 +67,6 @@ public class APlane extends Plane {
             Thread.sleep(20);
             //System.out.println(x + ", " + y + "   " + (orientation));
         } else {
-
-
         }
     }
 
@@ -113,12 +108,7 @@ public class APlane extends Plane {
      * @param p2 target point
      * @return the angle between the source and target
      */
-    private double angleOf(Point p1, Point p2) {
-        final double deltaY = (p2.y - p1.y);
-        final double deltaX = (p2.x - p1.x);
-        final double result = Math.toDegrees(Math.atan2(deltaY, deltaX));
-        return (result < 0) ? (360d + result) : result;
-    }
+
 
     //TODO
     @Override
