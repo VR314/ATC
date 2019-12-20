@@ -88,6 +88,7 @@ public class Airport extends JPanel {
         }
 
         System.out.println("painted");
+        repaint();
     }
 }
 
