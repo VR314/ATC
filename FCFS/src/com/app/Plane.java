@@ -9,12 +9,13 @@ public abstract class Plane {
     public double orientation;
     public double speed; // 1 knot = 1 nm / h, 150 knots = 40 minutes
     public int[] target;
+    public int gate;
 
     public abstract void spawn();
 
     public abstract void move();
 
-    public abstract void paint(Graphics2D g) throws InterruptedException;
+    public abstract void paint(Graphics2D g2d) throws InterruptedException;
 
     public final double angleOf(Point p1, Point p2) {
         final double deltaY = (p2.y - p1.y);

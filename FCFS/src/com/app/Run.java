@@ -29,7 +29,8 @@ public class Run {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Thread.sleep(10000);
-        airport.addGPlane(new GPlane(airport));
+        GPlane p = new GPlane(airport, 6);
+        airport.addGPlane(p);
 
     }
 

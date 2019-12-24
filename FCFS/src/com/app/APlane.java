@@ -50,18 +50,19 @@ public class APlane extends Plane {
     /**
      * paints the plane in its position
      *
+     * @param g2d
      * @throws InterruptedException obligatory due to <code>Thread.sleep()</code> command
      */
     @Override
-    public void paint(Graphics2D g) throws InterruptedException {
+    public void paint(Graphics2D g2d) throws InterruptedException {
         if (status == Status.AIRSPACE) {
             move();
-            g.drawOval((int) x, (int) y, 5, 5);
+            g2d.drawOval((int) x, (int) y, 5, 5);
             //draws a line to target for now... TODO: remove eventually
             if (mGate == GATE.NORTH) {
-                g.drawLine((int) x, (int) y, 0, 35);
+                g2d.drawLine((int) x, (int) y, 0, 35);
             } else if (mGate == GATE.SOUTH) {
-                g.drawLine((int) x, (int) y, 0, -35);
+                g2d.drawLine((int) x, (int) y, 0, -35);
             }
 
             Thread.sleep(20);

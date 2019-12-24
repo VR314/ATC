@@ -87,7 +87,11 @@ public class Airport extends JPanel {
             p.paint(g2d);
         }
 
-        System.out.println("painted");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         repaint();
     }
 }
