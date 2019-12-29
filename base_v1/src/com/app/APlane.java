@@ -1,4 +1,5 @@
 package com.app;
+
 import java.awt.*;
 
 enum GATE { // degrees = 180 + num
@@ -103,12 +104,6 @@ public class APlane extends Plane {
             status = Status.MG;
         }
     }
-
-    /**
-     * @param p1 source point
-     * @param p2 target point
-     * @return the angle between the source and target
-     */
 
 
     //TODO

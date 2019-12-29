@@ -31,13 +31,16 @@ public class Run {
         //Thread.sleep(10000);
         GPlane p = new GPlane(airport, 6);
         airport.addGPlane(p);
+        Thread.sleep(1000);
+        GPlane p2 = new GPlane(airport, 2);
+        airport.addGPlane(p2);
 
     }
 
 
     /**
      * @param out the String to be printed.
-     * @return Scanner.nextLine(); the response to the question
+     * @return <code>Scanner.nextLine();</code> the response to the question
      */
     public static String ask(String out) {
         Scanner s = new Scanner(System.in);
