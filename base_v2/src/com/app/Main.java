@@ -4,11 +4,15 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Airport jfk = new Airport();
-        JFrame frame = setupAirportFrame(jfk);
+        //Airport jfk = new Airport();
+        //JFrame frame = setupAirportFrame(jfk);
+        //GPlane p1 = new GPlane(jfk, (int)(Math.random() * 6) + 1);
+        // jfk.planes.add(p1);
 
-        GPlane p1 = new GPlane(jfk, (int)(Math.random() * 6) + 1);
-        jfk.planes.add(p1);
+        Airspace space = new Airspace();
+        JFrame frame = setupAirspaceFrame(space);
+
+
     }
 
     static JFrame setupAirportFrame(Airport airport){
@@ -20,4 +24,15 @@ public class Main {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         return frame;
     }
+
+    static JFrame setupAirspaceFrame(Airspace space){
+        JFrame frame = new JFrame();
+        frame.setSize(750, 700);
+        frame.add(space);
+        frame.setAlwaysOnTop(true);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        return frame;
+    }
+
 }
