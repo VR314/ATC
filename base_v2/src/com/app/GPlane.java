@@ -41,7 +41,6 @@ public class GPlane extends Plane {
                 break;
         }
 
-
         for (int i = 0; i <= lastTW; i++) {
             beforeGate.addLast(parts.get(i).target);
         }
@@ -49,12 +48,9 @@ public class GPlane extends Plane {
         beforeGate.addLast(gateCoords);
 
         afterGate.addFirst(parts.get((gate - 1) / 2 + 7).target); //apron
-
         for (int i = lastTW; i <= 6; i++) {
             afterGate.addLast(parts.get(i).target);
         }
-
-
     }
 
     @Override
@@ -62,8 +58,6 @@ public class GPlane extends Plane {
         coords = new int[]{680, 0};
         target = parts.get(0).target;
         orientation = 90 + angleOf(new Point(coords[0], coords[1]), new Point(target[0], target[1]));
-        System.out.println(orientation);
-        System.out.println(target[0] + " " + target[1]);
 
     }
 
@@ -72,16 +66,12 @@ public class GPlane extends Plane {
         if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= move) {
             coords[0] = target[0];
             coords[1] = target[1];
-            //if (new Scanner(System.in).nextInt() == (id)) //TODO: placeholder for algorithm
+         //if (new Scanner(System.in).nextInt() == (id)) //TODO: placeholder for algorithm
             changeTarget();
         } else {
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * move;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * move;
         }
-
-
-        //System.out.println(Math.hypot(coords[0] - target[0], coords[1] - target[1]));
-        //System.out.println(coords[0] + " " + coords[1]);
     }
 
     private void changeTarget() {
@@ -97,7 +87,6 @@ public class GPlane extends Plane {
             target = afterGate.get(index);
         }
         orientation = 90 + angleOf(new Point(coords[0], coords[1]), new Point(target[0], target[1]));
-
         System.out.println(this.toString());
     }
 

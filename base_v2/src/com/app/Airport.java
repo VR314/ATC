@@ -48,11 +48,9 @@ public class Airport extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        AffineTransform tform = AffineTransform.getTranslateInstance(-150, 0);
-
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setTransform(tform);
+        g2d.setTransform(AffineTransform.getTranslateInstance(-150, 0));
 
         for (Drivable d : parts)
             d.paint(g2d);
@@ -60,7 +58,10 @@ public class Airport extends JPanel {
         g2d.setColor(Color.magenta);
         for (Drivable d : parts)
             g2d.draw(d.rect);
-        g2d.draw(parts.get(2).rect);
+        parts.get(1).paint(g2d);
+        g2d.setColor(Color.magenta);
+        g2d.draw(parts.get(1).rect);
+
         for (Gate ga : gates)
             ga.paint(g2d);
 
