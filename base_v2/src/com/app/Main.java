@@ -12,10 +12,7 @@ public class Main {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        GPlane p1 = new GPlane(jfk, 6);
-        GPlane p2 = new GPlane(jfk, 1);
-        //jfk.planes.add(p1);
-        //Thread.sleep(1000);
-        jfk.planes.add(p2);
+        GPlane p1 = new GPlane(jfk, 1);
+        jfk.planes.add(p1);
     }
 }

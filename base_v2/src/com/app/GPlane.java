@@ -2,7 +2,6 @@ package com.app;
 
 import java.awt.*;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class GPlane extends Plane {
     private final int move = 10;
@@ -12,6 +11,7 @@ public class GPlane extends Plane {
     private LinkedList<int[]> beforeGate = new LinkedList<>();
     private LinkedList<int[]> afterGate = new LinkedList<>();
     private int[] gateCoords;
+    boolean past = false;
 
     public GPlane(Airport airport, int gate) {
         parts = airport.parts;
@@ -48,7 +48,7 @@ public class GPlane extends Plane {
         beforeGate.addLast(parts.get((gate - 1) / 2 + 7).target); //apron
         beforeGate.addLast(gateCoords);
 
-        afterGate.addLast(parts.get((gate - 1) / 2 + 7).target); //apron
+        afterGate.addFirst(parts.get((gate - 1) / 2 + 7).target); //apron
 
         for (int i = lastTW; i <= 6; i++) {
             afterGate.addLast(parts.get(i).target);
@@ -72,14 +72,13 @@ public class GPlane extends Plane {
         if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= move) {
             coords[0] = target[0];
             coords[1] = target[1];
-            if (new Scanner(System.in).nextInt() == (id)) //TODO: placeholder for algorithm
-                changeTarget();
+            //if (new Scanner(System.in).nextInt() == (id)) //TODO: placeholder for algorithm
+            changeTarget();
         } else {
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * move;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * move;
         }
 
-        System.out.println(this.toString());
 
         //System.out.println(Math.hypot(coords[0] - target[0], coords[1] - target[1]));
         //System.out.println(coords[0] + " " + coords[1]);
@@ -87,13 +86,19 @@ public class GPlane extends Plane {
 
     private void changeTarget() {
         index++;
-        if (index < beforeGate.size()) {
+        if (!past && index < beforeGate.size()) {
             target = beforeGate.get(index);
+            //System.out.println(beforeGate.get(index)[0] + " " + beforeGate.get(index)[0]);
+            //System.out.println(index);
+        } else if (!past && index == beforeGate.size()) {
+            index = -1;
+            past = true;
         } else if (index < afterGate.size()) {
-            target = afterGate.get(index - beforeGate.size());
+            target = afterGate.get(index);
         }
         orientation = 90 + angleOf(new Point(coords[0], coords[1]), new Point(target[0], target[1]));
 
+        System.out.println(this.toString());
     }
 
     @Override

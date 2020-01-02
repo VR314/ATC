@@ -22,11 +22,10 @@ public class Airport extends JPanel {
         Taxiway quatre = new Taxiway(trois, new Rectangle2D.Double(350, 150, 100, 131.25), new int[]{400, 206});
         Taxiway cinq = new Taxiway(quatre, new Rectangle2D.Double(350, 75, 100, 75), new int[]{400, 90});
         Taxiway six = new Taxiway(cinq, new Rectangle2D.Double(450, 75, 150, 37.5), new int[]{580, 90});
+
         parts.add(r);
         parts.add(un);
         parts.add(deux);
-
-
         parts.add(trois);
         parts.add(quatre);
         parts.add(cinq);
@@ -61,7 +60,7 @@ public class Airport extends JPanel {
         g2d.setColor(Color.magenta);
         for (Drivable d : parts)
             g2d.draw(d.rect);
-
+        g2d.draw(parts.get(2).rect);
         for (Gate ga : gates)
             ga.paint(g2d);
 
