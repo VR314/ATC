@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
-public abstract class Drivable {
+public class Drivable {
     public boolean full;
     public LinkedList<GPlane> planes;
     protected Drivable before;
@@ -45,6 +45,6 @@ public abstract class Drivable {
     }
 
     public final String type() {
-        return this.getClass().getName();
+        return this.getClass().getName() + " {" + target[0] + ", " + target[1] + "}";
     }
 }

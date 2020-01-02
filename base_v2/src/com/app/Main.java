@@ -3,16 +3,19 @@ package com.app;
 import javax.swing.*;
 
 public class Main {
-    public static void main(String[] args) {
-        JFrame airport = new JFrame();
-        airport.setSize(750, 750);
+    public static void main(String[] args) throws InterruptedException {
+        JFrame frame = new JFrame();
+        frame.setSize(750, 750);
         Airport jfk = new Airport();
-        airport.add(jfk);
-        airport.setVisible(true);
-        airport.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(jfk);
+        frame.setAlwaysOnTop(true);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        GPlane p1 = new GPlane(jfk);
-        p1.gate = 6;
-        p1.setPartsOrder();
+        GPlane p1 = new GPlane(jfk, 6);
+        GPlane p2 = new GPlane(jfk, 1);
+        //jfk.planes.add(p1);
+        //Thread.sleep(1000);
+        jfk.planes.add(p2);
     }
 }
