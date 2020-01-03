@@ -11,6 +11,7 @@ public class Main {
 
         Airspace space = new Airspace();
         JFrame frame = setupAirspaceFrame(space);
+        space.planes.add(new APlane(120));
 
 
     }
@@ -27,7 +28,7 @@ public class Main {
 
     static JFrame setupAirspaceFrame(Airspace space){
         JFrame frame = new JFrame();
-        frame.setSize(750, 700);
+        frame.setSize(750, 500);
         frame.add(space);
         frame.setAlwaysOnTop(true);
         frame.setVisible(true);

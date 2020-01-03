@@ -9,9 +9,24 @@ public class APlane extends Plane {
     private double y;
     public GATE mGate;
 
-    enum GATE { // degrees = 180 + num
-        NORTH,
-        SOUTH,
+    private void turn() {
+        double oldOrientation = orientation;
+        if (mGate == GATE.NORTH) {
+            orientation = angleOf(new Point((int) x, (int) y), new Point(0, 35));
+        } else if (mGate == GATE.SOUTH) {
+            orientation = angleOf(new Point((int) x, (int) y), new Point(0, -35));
+        }
+
+        orientation += 90;
+        while (orientation < 0) {
+            orientation += 360;
+        }
+        while (orientation > 360) {
+            orientation -= 360;
+        }
+        angleFromRunway = 0 - orientation;
+
+        System.out.println(orientation);
     }
 
     public APlane(double a) {
@@ -37,37 +52,19 @@ public class APlane extends Plane {
         y = dist * Math.sin(Math.toRadians(angleFromRunway));
     }
 
-    private void turn() {
-        double oldOrientation = orientation;
-        if (mGate == GATE.NORTH) {
-            orientation = angleOf(new Point((int) x, (int) y), new Point(0, 35));
-        } else if (mGate == GATE.SOUTH) {
-            orientation = angleOf(new Point((int) x, (int) y), new Point(0, -35));
-        }
-
-        if(oldOrientation - orientation > 10)
-            orientation = oldOrientation - 10;
-        else if(oldOrientation - orientation < -10)
-            orientation = oldOrientation + 10;
-        orientation += 90;
-        while (orientation < 0) {
-            orientation += 360;
-        }
-        while (orientation > 360) {
-            orientation -= 360;
-        }
-        angleFromRunway = 0 - orientation;
-    }
-
     @Override
     public void move() {
         turn();
-        final double move = speed / 60 * 5; // 5 = timePass
-        x += Math.cos(Math.toRadians(orientation - 90)) * move;
-        y += Math.sin(Math.toRadians(orientation - 90)) * move;
+        x += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
+        y += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
         if (Math.abs(this.y) - 35 < 1 && Math.abs(this.x) < 1) {
             //TODO: at metered gate
         }
+    }
+
+    enum GATE {
+        NORTH,
+        SOUTH,
     }
 
     @Override
