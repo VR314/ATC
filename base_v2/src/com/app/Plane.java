@@ -11,6 +11,7 @@ public abstract class Plane { //ALGORITHMS MAINLY LOOK @ THIS CLASS
     protected int speed;
     protected double orientation;
     protected LinkedList<Drivable> parts; //in spawn, reorder parts list depending on gate
+    public Airport airport;
 
     public abstract void spawn();
 

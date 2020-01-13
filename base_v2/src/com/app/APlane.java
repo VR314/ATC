@@ -4,19 +4,44 @@ import java.awt.*;
 
 public class APlane extends Plane {
     private double angleFromRunway;
-    private double dist;
-    private double x;
-    private double y;
+    public double x;
+    public double y;
     public GATE mGate;
 
-    enum GATE { // degrees = 180 + num
-        NORTH,
-        SOUTH,
+    public APlane(double a, Airport airport) {
+        angleFromRunway = a;
+        this.airport = airport;
+        gate = 1;
+        //TODO: in algorithm, set gate on spawn
+        spawn();
     }
 
-    public APlane(double a) {
+    public APlane(Plane p, double a) {
         angleFromRunway = a;
-        spawn();
+        this.airport = p.airport;
+        gate = 1;
+        //TODO: in algorithm, set gate on spawn
+        //TODO: set departing status, make plane leave
+    }
+
+    private void turn() {
+        //double oldOrientation = orientation;
+        if (mGate == GATE.NORTH) {
+            orientation = angleOf(new Point((int) x, (int) y), new Point(0, 35));
+        } else if (mGate == GATE.SOUTH) {
+            orientation = angleOf(new Point((int) x, (int) y), new Point(0, -35));
+        }
+
+        orientation += 90;
+        while (orientation < 0) {
+            orientation += 360;
+        }
+        while (orientation > 360) {
+            orientation -= 360;
+        }
+        angleFromRunway = 0 - orientation;
+
+//        System.out.println(orientation);
     }
 
     @Override
@@ -32,42 +57,21 @@ public class APlane extends Plane {
             mGate = GATE.SOUTH;
         }
         speed = 15;
-        dist = 100;
-        x = dist * Math.cos(Math.toRadians(angleFromRunway));
-        y = dist * Math.sin(Math.toRadians(angleFromRunway));
-    }
-
-    private void turn() {
-        double oldOrientation = orientation;
-        if (mGate == GATE.NORTH) {
-            orientation = angleOf(new Point((int) x, (int) y), new Point(0, 35));
-        } else if (mGate == GATE.SOUTH) {
-            orientation = angleOf(new Point((int) x, (int) y), new Point(0, -35));
-        }
-
-        if(oldOrientation - orientation > 10)
-            orientation = oldOrientation - 10;
-        else if(oldOrientation - orientation < -10)
-            orientation = oldOrientation + 10;
-        orientation += 90;
-        while (orientation < 0) {
-            orientation += 360;
-        }
-        while (orientation > 360) {
-            orientation -= 360;
-        }
-        angleFromRunway = 0 - orientation;
+        x = 100 * Math.cos(Math.toRadians(angleFromRunway));
+        y = 100 * Math.sin(Math.toRadians(angleFromRunway));
     }
 
     @Override
     public void move() {
         turn();
-        final double move = speed / 60 * 5; // 5 = timePass
-        x += Math.cos(Math.toRadians(orientation - 90)) * move;
-        y += Math.sin(Math.toRadians(orientation - 90)) * move;
-        if (Math.abs(this.y) - 35 < 1 && Math.abs(this.x) < 1) {
-            //TODO: at metered gate
-        }
+        x += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
+        y += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+
+    }
+
+    enum GATE {
+        NORTH,
+        SOUTH,
     }
 
     @Override
