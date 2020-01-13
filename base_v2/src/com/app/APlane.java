@@ -4,13 +4,28 @@ import java.awt.*;
 
 public class APlane extends Plane {
     private double angleFromRunway;
-    private double dist;
-    private double x;
-    private double y;
+    public double x;
+    public double y;
     public GATE mGate;
 
+    public APlane(double a, Airport airport) {
+        angleFromRunway = a;
+        this.airport = airport;
+        gate = 1;
+        //TODO: in algorithm, set gate on spawn
+        spawn();
+    }
+
+    public APlane(Plane p, double a) {
+        angleFromRunway = a;
+        this.airport = p.airport;
+        gate = 1;
+        //TODO: in algorithm, set gate on spawn
+        //TODO: set departing status, make plane leave
+    }
+
     private void turn() {
-        double oldOrientation = orientation;
+        //double oldOrientation = orientation;
         if (mGate == GATE.NORTH) {
             orientation = angleOf(new Point((int) x, (int) y), new Point(0, 35));
         } else if (mGate == GATE.SOUTH) {
@@ -26,12 +41,7 @@ public class APlane extends Plane {
         }
         angleFromRunway = 0 - orientation;
 
-        System.out.println(orientation);
-    }
-
-    public APlane(double a) {
-        angleFromRunway = a;
-        spawn();
+//        System.out.println(orientation);
     }
 
     @Override
@@ -47,9 +57,8 @@ public class APlane extends Plane {
             mGate = GATE.SOUTH;
         }
         speed = 15;
-        dist = 100;
-        x = dist * Math.cos(Math.toRadians(angleFromRunway));
-        y = dist * Math.sin(Math.toRadians(angleFromRunway));
+        x = 100 * Math.cos(Math.toRadians(angleFromRunway));
+        y = 100 * Math.sin(Math.toRadians(angleFromRunway));
     }
 
     @Override
@@ -57,9 +66,7 @@ public class APlane extends Plane {
         turn();
         x += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
         y += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
-        if (Math.abs(this.y) - 35 < 1 && Math.abs(this.x) < 1) {
-            //TODO: at metered gate
-        }
+
     }
 
     enum GATE {

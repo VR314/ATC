@@ -10,12 +10,22 @@ public class GPlane extends Plane {
     int lastTW = 0;
     private LinkedList<int[]> beforeGate = new LinkedList<>();
     private LinkedList<int[]> afterGate = new LinkedList<>();
-    private int[] gateCoords;
+    private int[] gateCoords = new int[2];
     boolean past = false;
 
     public GPlane(Airport airport, int gate) {
         parts = airport.parts;
         this.gate = gate;
+        this.gateCoords = airport.gates[6 - gate].target;
+        System.out.println(gateCoords[0] + ", " + gateCoords[1]);
+        setPartsOrder();
+        spawn();
+    }
+
+    public GPlane(Plane p) {
+        this.airport = p.airport;
+        parts = p.airport.parts;
+        this.gate = p.gate;
         this.gateCoords = airport.gates[6 - gate].target;
         System.out.println(gateCoords[0] + ", " + gateCoords[1]);
         setPartsOrder();

@@ -23,7 +23,10 @@ public class Airspace extends JPanel {
         g2d.drawOval(0, 0, 10, 10);
         g2d.setStroke(new BasicStroke(1));
         for (int i = planes.size(); i > 0; i--) {
-            planes.get(i - 1).paint(g2d);
+            if (Math.abs(planes.get(i - 1).x) < 3 && Math.abs(planes.get(i - 1).y) - 35 < 3)
+                handoff(planes.get(i - 1));
+            else
+                planes.get(i - 1).paint(g2d);
         }
         try {
             Thread.sleep(100);
@@ -31,5 +34,11 @@ public class Airspace extends JPanel {
             e.printStackTrace();
         }
         repaint();
+    }
+
+    private void handoff(APlane aPlane) {
+        APlane temp = planes.remove(planes.indexOf(aPlane));
+        Plane p = temp;
+        temp.airport.planes.add(new GPlane(p));
     }
 }
