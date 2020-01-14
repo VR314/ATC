@@ -19,6 +19,7 @@ public class GPlane extends Plane {
         this.gateCoords = airport.gates[6 - gate].target;
         System.out.println(gateCoords[0] + ", " + gateCoords[1]);
         setPartsOrder();
+        coords = new int[]{680, 0};
         spawn();
     }
 
@@ -29,6 +30,7 @@ public class GPlane extends Plane {
         this.gateCoords = airport.gates[6 - gate].target;
         System.out.println(gateCoords[0] + ", " + gateCoords[1]);
         setPartsOrder();
+        coords = new int[]{680, -100};
         spawn();
     }
 
@@ -65,7 +67,6 @@ public class GPlane extends Plane {
 
     @Override
     public void spawn() {
-        coords = new int[]{680, 0};
         target = parts.get(0).target;
         orientation = 90 + angleOf(new Point(coords[0], coords[1]), new Point(target[0], target[1]));
 
