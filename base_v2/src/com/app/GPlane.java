@@ -69,7 +69,6 @@ public class GPlane extends Plane {
     public void spawn() {
         target = parts.get(0).target;
         orientation = 90 + angleOf(new Point(coords[0], coords[1]), new Point(target[0], target[1]));
-
     }
 
     @Override
@@ -77,7 +76,7 @@ public class GPlane extends Plane {
         if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= move) {
             coords[0] = target[0];
             coords[1] = target[1];
-         //if (new Scanner(System.in).nextInt() == (id)) //TODO: placeholder for algorithm
+            //if (new Scanner(System.in).nextInt() == (id)) //TODO: placeholder for algorithm
             changeTarget();
         } else {
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * move;
@@ -95,10 +94,15 @@ public class GPlane extends Plane {
             index = -1;
             past = true;
         } else if (index < afterGate.size()) {
-            target = afterGate.get(index);
+            takeoff();
         }
         orientation = 90 + angleOf(new Point(coords[0], coords[1]), new Point(target[0], target[1]));
         System.out.println(this.toString());
+    }
+
+    public void takeoff() {
+
+
     }
 
     @Override
