@@ -88,14 +88,15 @@ public class GPlane extends Plane {
         index++;
         if (!past && index < beforeGate.size()) {
             target = beforeGate.get(index);
-            //System.out.println(beforeGate.get(index)[0] + " " + beforeGate.get(index)[0]);
-            //System.out.println(index);
         } else if (!past && index == beforeGate.size()) {
             index = -1;
             past = true;
-        } else if (index < afterGate.size()) {
+        } else if (past && index < afterGate.size()) {
+            target = afterGate.get(index);
+        } else {
             takeoff();
         }
+
         orientation = 90 + angleOf(new Point(coords[0], coords[1]), new Point(target[0], target[1]));
         System.out.println(this.toString());
     }

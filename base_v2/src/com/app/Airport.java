@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Airport extends JPanel {
     final int TICK = 100; //in ms to refresh
@@ -14,7 +15,7 @@ public class Airport extends JPanel {
 
     public Airport() {
         //parts = {runway, un, deux, trois, quatre, cinq, six, a1, a2, a3}
-
+        Scanner s = new Scanner(System.in);
         Runway r = new Runway(new Rectangle2D.Double(600, 75, 160, 525), new int[]{680, 578});
         Taxiway un = new Taxiway(r, new Rectangle2D.Double(450, 562.5, 150, 37.5), new int[]{400, 578});
         Taxiway deux = new Taxiway(un, new Rectangle2D.Double(350, 431.25, 100, 168.75), new int[]{400, 506});
