@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 public class GPlane extends Plane {
     private final int move = 10;
-    public boolean done = false;
+    //private boolean done = false; use in takeoff method OR remove
     int index = 0;
     int lastTW = 0;
     private LinkedList<int[]> beforeGate = new LinkedList<>();

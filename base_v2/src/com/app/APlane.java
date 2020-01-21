@@ -4,8 +4,6 @@ import java.awt.*;
 
 public class APlane extends Plane {
     private double angleFromRunway;
-    public double x;
-    public double y;
     public GATE mGate;
 
     public APlane(double a, Airport airport) {
@@ -27,9 +25,9 @@ public class APlane extends Plane {
     private void turn() {
         //double oldOrientation = orientation;
         if (mGate == GATE.NORTH) {
-            orientation = angleOf(new Point((int) x, (int) y), new Point(0, 35));
+            orientation = angleOf(new Point(coords[0], coords[1]), new Point(0, 35));
         } else if (mGate == GATE.SOUTH) {
-            orientation = angleOf(new Point((int) x, (int) y), new Point(0, -35));
+            orientation = angleOf(new Point(coords[0], coords[1]), new Point(0, -35));
         }
 
         orientation += 90;
@@ -57,15 +55,14 @@ public class APlane extends Plane {
             mGate = GATE.SOUTH;
         }
         speed = 15;
-        x = 100 * Math.cos(Math.toRadians(angleFromRunway));
-        y = 100 * Math.sin(Math.toRadians(angleFromRunway));
+        coords = new int[]{(int) (100 * Math.cos(Math.toRadians(angleFromRunway))), (int) (100 * Math.sin(Math.toRadians(angleFromRunway)))};
     }
 
     @Override
     public void move() {
         turn();
-        x += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
-        y += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+        coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
+        coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
 
     }
 
@@ -77,14 +74,13 @@ public class APlane extends Plane {
     @Override
     public void paint(Graphics2D g2d) {
         move();
-        g2d.drawOval((int) x, (int) y, 5, 5);
+        g2d.drawOval(coords[0], coords[1], 5, 5);
         //draws a line to target for now... TODO: remove eventually
         if (mGate == GATE.NORTH) {
-            g2d.drawLine((int) x, (int) y, 0, 35);
+            g2d.drawLine(coords[0], coords[1], 0, 35);
         } else if (mGate == GATE.SOUTH) {
-            g2d.drawLine((int) x, (int) y, 0, -35);
+            g2d.drawLine(coords[0], coords[1], 0, -35);
         }
-        //System.out.println(x + ", " + y + "   " + (orientation));
     }
 }
 
