@@ -8,12 +8,26 @@ public class Drivable {
     public boolean full;
     public LinkedList<GPlane> planes;
     protected Drivable before;
+    protected Drivable after;
     protected Rectangle2D rect;
     protected Color color;
     protected boolean fill;
     protected int[] target;
 
-    public Drivable(Drivable before, Rectangle2D rect, int[] target) {
+    public Drivable(Drivable before, Rectangle2D rect, int[] target, Drivable after) {
+        this.rect = rect;
+        this.target = target;
+        this.before = before;
+        this.after = after;
+    }
+
+    public Drivable(Rectangle2D rect, int[] target, Drivable after) { //FIRST
+        this.rect = rect;
+        this.target = target;
+        this.after = after;
+    }
+
+    public Drivable(Drivable before, Rectangle2D rect, int[] target) { //LAST
         this.rect = rect;
         this.target = target;
         this.before = before;

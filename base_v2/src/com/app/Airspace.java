@@ -6,10 +6,10 @@ import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 
 public class Airspace extends JPanel {
-
-    public LinkedList<APlane> planes = new LinkedList<>();
+    public LinkedList<APlane> planes;
 
     public Airspace() {
+        planes = new LinkedList<APlane>();
     }
 
     @Override
@@ -21,11 +21,11 @@ public class Airspace extends JPanel {
         g2d.setStroke(new BasicStroke(2));
         g2d.drawOval(0, 0, 10, 10);
         g2d.setStroke(new BasicStroke(1));
-        for (int i = planes.size(); i > 0; i--) {
-            if (Math.abs(planes.get(i - 1).coords[0]) < 3 && Math.abs(planes.get(i - 1).coords[1]) - 35 < 3)
-                handoff(planes.get(i - 1));
+        for (int i = 0; i < planes.size(); i++) {
+            if (Math.abs(planes.get(i).coords[0]) < 5 && Math.abs(planes.get(i).coords[1]) - 35 < 5)
+                planes.get(i).toGPlane();
             else
-                planes.get(i - 1).paint(g2d);
+                planes.get(i).paint(g2d);
         }
 
         try {
@@ -34,10 +34,5 @@ public class Airspace extends JPanel {
             e.printStackTrace();
         }
         repaint();
-    }
-
-    private void handoff(APlane aPlane) {
-        APlane temp = planes.remove(planes.indexOf(aPlane));
-        temp.airport.planes.add(new GPlane(temp));
     }
 }

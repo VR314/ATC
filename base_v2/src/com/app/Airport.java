@@ -5,39 +5,33 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class Airport extends JPanel {
     final int TICK = 100; //in ms to refresh
-    public LinkedList<GPlane> planes = new LinkedList<>();
-    public LinkedList<Drivable> parts = new LinkedList<>();
+    public LinkedList<GPlane> planes = new LinkedList<>(); //TODO: IMPLEMENT QUEUE
+    public Rectangle2D[] parts;
+    public Apron[] aprons;
+    public Runway r = new Runway(new Rectangle2D.Double(600, 75, 160, 525), new int[]{680, 578});
     public Gate[] gates;
 
     public Airport() {
-        //parts = {runway, un, deux, trois, quatre, cinq, six, a1, a2, a3}
-        Scanner s = new Scanner(System.in);
-        Runway r = new Runway(new Rectangle2D.Double(600, 75, 160, 525), new int[]{680, 578});
-        Taxiway un = new Taxiway(r, new Rectangle2D.Double(450, 562.5, 150, 37.5), new int[]{400, 578});
+        //Scanner s = new Scanner(System.in);
+        Rectangle2D deux = new Rectangle2D.Double(450, 562.5, 150, 37.5);
+        Rectangle2D main = new Rectangle2D.Double(350, 75, 100, 525);
+        Rectangle2D un = new Rectangle2D.Double(450, 75, 150, 37.5);
+        /*Taxiway un = new Taxiway(r, new Rectangle2D.Double(450, 562.5, 150, 37.5), new int[]{400, 578});
         Taxiway deux = new Taxiway(un, new Rectangle2D.Double(350, 431.25, 100, 168.75), new int[]{400, 506});
         Taxiway trois = new Taxiway(deux, new Rectangle2D.Double(350, 281.25, 100, 150), new int[]{400, 356});
         Taxiway quatre = new Taxiway(trois, new Rectangle2D.Double(350, 150, 100, 131.25), new int[]{400, 206});
         Taxiway cinq = new Taxiway(quatre, new Rectangle2D.Double(350, 75, 100, 75), new int[]{400, 90});
         Taxiway six = new Taxiway(cinq, new Rectangle2D.Double(450, 75, 150, 37.5), new int[]{580, 90});
-
-        parts.add(r);
-        parts.add(un);
-        parts.add(deux);
-        parts.add(trois);
-        parts.add(quatre);
-        parts.add(cinq);
-        parts.add(six);
+         */
+        parts = new Rectangle2D[]{main, un, deux};
 
         Apron a3 = new Apron(new Rectangle2D.Double(275, 187.5, 75, 37.5), new int[]{275, 206});
         Apron a2 = new Apron(new Rectangle2D.Double(275, 337.5, 75, 37.5), new int[]{275, 356});
         Apron a1 = new Apron(new Rectangle2D.Double(275, 487.5, 75, 37.5), new int[]{275, 506});
-        parts.add(a1);
-        parts.add(a2);
-        parts.add(a3);
+        aprons = new Apron[]{a1, a2, a3};
 
         gates = new Gate[]{new Gate(new Rectangle2D.Double(225, 131.25, 50, 75)),
                 new Gate(new Rectangle2D.Double(225, 206.25, 50, 75)),
@@ -53,22 +47,32 @@ public class Airport extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setTransform(AffineTransform.getTranslateInstance(-150, 0));
 
-        for (Drivable d : parts)
-            d.paint(g2d);
+        g2d.setColor(Color.gray);
+        for (Rectangle2D d : parts)
+            g2d.fill(d);
 
         g2d.setColor(Color.magenta);
-        for (Drivable d : parts)
-            g2d.draw(d.rect);
-        parts.get(1).paint(g2d);
+        for (Rectangle2D d : parts)
+            g2d.draw(d);
+
+        g2d.setColor(Color.gray);
+        g2d.fill(parts[1]);
         g2d.setColor(Color.magenta);
-        g2d.draw(parts.get(1).rect);
+        g2d.draw(parts[1]);
 
         for (Gate ga : gates)
             ga.paint(g2d);
 
-        for (GPlane p : planes)
-            p.paint(g2d);
+        for (Apron a : aprons)
+            a.paint(g2d);
 
+        g2d.setColor(Color.black);
+        g2d.fill(r.rect);
+
+        for (GPlane p : planes) {
+            //System.out.println(p.toString());
+            p.paint(g2d);
+        }
         try {
             Thread.sleep(TICK);
             repaint();
