@@ -22,7 +22,8 @@ public class Airspace extends JPanel {
         g2d.drawOval(0, 0, 10, 10);
         g2d.setStroke(new BasicStroke(1));
         for (APlane plane : planes) {
-            if (Math.abs(plane.coords[0]) < 5 && Math.abs(plane.coords[1]) - 35 < 5)
+            if (Math.abs(plane.coords[0])
+                    < 5 && Math.abs(plane.coords[1]) - 35 < 5)
                 plane.toGPlane();
             else
                 plane.paint(g2d);

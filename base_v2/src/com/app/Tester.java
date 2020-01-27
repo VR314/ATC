@@ -3,7 +3,7 @@ package com.app;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class Main {
+public class Tester {
     public static void main(String[] args) {
         Airport jfk = new Airport();
         Airspace space = new Airspace();

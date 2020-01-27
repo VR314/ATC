@@ -12,13 +12,13 @@ public abstract class Plane { //ALGORITHMS MAINLY LOOK @ THIS CLASS
     protected double orientation;
     public Airport airport;
 
-    public abstract void spawn();
+    protected abstract void spawn();
 
-    public abstract void move();
+    protected abstract void move();
 
-    public abstract void paint(Graphics2D g2d);
+    protected abstract void paint(Graphics2D g2d);
 
-    public final double angleOf(double x1, double y1, double x2, double y2) {
+    protected final double angleOf(double x1, double y1, double x2, double y2) {
         final double deltaY = (y2 - y1);
         final double deltaX = (x2 - x1);
         final double result = Math.toDegrees(Math.atan2(deltaY, deltaX));

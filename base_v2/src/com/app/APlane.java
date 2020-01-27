@@ -5,9 +5,14 @@ import java.awt.*;
 public class APlane extends Plane {
     private double angleFromRunway;
     public GATE mGate;
+    enum GATE {
+        NORTH,
+        SOUTH,
+    }
 
     public APlane(double a, Airport airport, Airspace airspace) {
         angleFromRunway = a;
+        coords = new double[]{(100 * Math.cos(Math.toRadians(angleFromRunway))), (100 * Math.sin(Math.toRadians(angleFromRunway)))};
         this.airspace = airspace;
         airspace.planes.add(this);
         this.airport = airport;
@@ -18,6 +23,7 @@ public class APlane extends Plane {
 
     public APlane(Plane p, double a) {
         angleFromRunway = a;
+        coords = new double[]{(100 * Math.cos(Math.toRadians(angleFromRunway))), (100 * Math.sin(Math.toRadians(angleFromRunway)))};
         this.airport = p.airport;
         this.airspace = p.airspace;
         airspace.planes.add(this);
@@ -47,7 +53,7 @@ public class APlane extends Plane {
     }
 
     @Override
-    public void spawn() {
+    protected void spawn() {
         orientation = 0 - angleFromRunway;
         while (angleFromRunway < 0) {
             angleFromRunway += 360;
@@ -58,19 +64,13 @@ public class APlane extends Plane {
             mGate = GATE.SOUTH;
         }
         speed = 15;
-        coords = new double[]{(100 * Math.cos(Math.toRadians(angleFromRunway))), (100 * Math.sin(Math.toRadians(angleFromRunway)))};
     }
 
     @Override
-    public void move() {
+    protected void move() {
         turn();
         coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
         coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
-    }
-
-    enum GATE {
-        NORTH,
-        SOUTH,
     }
 
     @Override

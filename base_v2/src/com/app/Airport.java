@@ -7,33 +7,24 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
 public class Airport extends JPanel {
-    final int TICK = 100; //in ms to refresh
+    final int TICK = 20; //in ms to refresh
     public LinkedList<GPlane> planes = new LinkedList<>(); //TODO: IMPLEMENT QUEUE
-    public Rectangle2D[] parts = new Rectangle2D[3];
-    public Apron[] aprons;
-    public Gate[] gates = new Gate[]{new Gate(new Rectangle2D.Double(225, 131.25, 50, 75)),
+    public Runway r = new Runway(new Rectangle2D.Double(600, 75, 160, 525), new int[]{680, 578});
+    public Rectangle2D[] parts = {
+            new Rectangle2D.Double(350, 75, 100, 525),
+            new Rectangle2D.Double(450, 75, 150, 37.5),
+            new Rectangle2D.Double(450, 562.5, 150, 37.5)};
+    public Apron[] aprons = {
+            new Apron(new Rectangle2D.Double(275, 487.5, 75, 37.5), new int[]{275, 506}),
+            new Apron(new Rectangle2D.Double(275, 337.5, 75, 37.5), new int[]{275, 356}),
+            new Apron(new Rectangle2D.Double(275, 187.5, 75, 37.5), new int[]{275, 206})};
+    public Gate[] gates = new Gate[]{
+            new Gate(new Rectangle2D.Double(225, 131.25, 50, 75)),
             new Gate(new Rectangle2D.Double(225, 206.25, 50, 75)),
             new Gate(new Rectangle2D.Double(225, 280.5, 50, 75)),
             new Gate(new Rectangle2D.Double(225, 355.5, 50, 75)),
             new Gate(new Rectangle2D.Double(225, 430.5, 50, 75)),
             new Gate(new Rectangle2D.Double(225, 506.25, 50, 75))};
-
-    {
-        Rectangle2D deux = new Rectangle2D.Double(450, 562.5, 150, 37.5);
-        Rectangle2D main = new Rectangle2D.Double(350, 75, 100, 525);
-        Rectangle2D un = new Rectangle2D.Double(450, 75, 150, 37.5);
-        parts = new Rectangle2D[]{main, un, deux};
-    }
-
-    public Runway r = new Runway(new Rectangle2D.Double(600, 75, 160, 525), new int[]{680, 578});
-
-    {
-        Apron a3 = new Apron(new Rectangle2D.Double(275, 187.5, 75, 37.5), new int[]{275, 206});
-        Apron a2 = new Apron(new Rectangle2D.Double(275, 337.5, 75, 37.5), new int[]{275, 356});
-        Apron a1 = new Apron(new Rectangle2D.Double(275, 487.5, 75, 37.5), new int[]{275, 506});
-        aprons = new Apron[]{a1, a2, a3};
-    }
-
 
     public Airport() {
     }

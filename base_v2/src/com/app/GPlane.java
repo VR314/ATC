@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class GPlane extends Plane {
     public boolean wait = false;
-    private final int move = 10;
+    private final int move = 5;
     Direction land; //from
     int index = 0;
     Direction takeoff; //towards
@@ -43,7 +43,7 @@ public class GPlane extends Plane {
         System.out.println(this.toString());
     }
 
-    public void toGateParts() { //TODO: set apron
+    public void toGateParts() {
         switch (gate) {
             case 1:
             case 2:
@@ -101,7 +101,7 @@ public class GPlane extends Plane {
             target[1] = 0;
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * move;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * move;
-            orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]); //TODO: add toAPlane
+            orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]); //TODO: add toAPlane()
         } else if (!wait) {
             if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= move * 2) {
                 coords[0] = target[0];
