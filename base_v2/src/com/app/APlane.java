@@ -52,7 +52,6 @@ public class APlane extends Plane {
         while (angleFromRunway < 0) {
             angleFromRunway += 360;
         }
-        System.out.println(angleFromRunway);
         if (angleFromRunway < 180) {
             mGate = GATE.NORTH;
         } else {

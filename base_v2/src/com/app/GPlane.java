@@ -8,7 +8,7 @@ public class GPlane extends Plane {
     Direction land; //from
     int index = 0;
     Direction takeoff; //towards
-    private int[] gateCoords = new int[2];
+    private int[] gateCoords;
     private double[][] targets = new double[5][2];
     private Apron a;
     private boolean pastGate = false;
@@ -34,7 +34,6 @@ public class GPlane extends Plane {
         //parts = p.airport.parts;
         this.gate = p.gate;
         this.gateCoords = airport.gates[6 - gate].target;
-        System.out.println(gateCoords[0] + ", " + gateCoords[1]);
         toGateParts();
         if (d == Direction.NORTH)
             coords = new double[]{680, -100};
@@ -99,12 +98,10 @@ public class GPlane extends Plane {
     @Override
     public void move() {
         if (takingoff) {
-            //IMPLEMENT TAKEOFF MECHANICS
             target[1] = 0;
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * move;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * move;
-            orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
-            System.out.println(this.toString());
+            orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]); //TODO: add toAPlane
         } else if (!wait) {
             if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= move * 2) {
                 coords[0] = target[0];
