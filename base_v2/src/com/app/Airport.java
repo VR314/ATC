@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
 public class Airport extends JPanel {
-    final int TICK = 20; //in ms to refresh
+    final int TICK = 50; //in ms to refresh
     public LinkedList<GPlane> planes = new LinkedList<>(); //TODO: IMPLEMENT QUEUE
     public Runway r = new Runway(new Rectangle2D.Double(600, 75, 160, 525), new int[]{680, 578});
     public Rectangle2D[] parts = {
