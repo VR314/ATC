@@ -19,7 +19,7 @@ public class Airspace extends JPanel {
         AffineTransform tform = AffineTransform.getTranslateInstance(375, 250);
         g2d.setTransform(tform);
         g2d.setStroke(new BasicStroke(2));
-        g2d.drawOval(0, 0, 10, 10);
+        g2d.drawLine(0, 5, 0, -5);
         g2d.setStroke(new BasicStroke(1));
         for (APlane plane : planes) {
             if (Math.abs(plane.coords[0])

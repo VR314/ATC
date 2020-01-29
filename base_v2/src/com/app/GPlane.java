@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class GPlane extends Plane {
     public boolean wait = false;
-    private final int move = 5;
+    private final int move = 20;
     Direction land; //from
     int index = 0;
     Direction takeoff; //towards

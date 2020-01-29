@@ -32,8 +32,7 @@ public class APlane extends Plane {
         //TODO: set departing status, make plane leave
     }
 
-    private void turn() {
-        //double oldOrientation = orientation;
+    private void turn() { //TODO: make turning more smooth, gradual
         if (mGate == GATE.NORTH) {
             orientation = angleOf(coords[0], coords[1], 0, 35);
         } else if (mGate == GATE.SOUTH) {
@@ -48,8 +47,6 @@ public class APlane extends Plane {
             orientation -= 360;
         }
         angleFromRunway = 0 - orientation;
-
-//        System.out.println(orientation);
     }
 
     @Override
@@ -64,6 +61,7 @@ public class APlane extends Plane {
             mGate = GATE.SOUTH;
         }
         speed = 15;
+        //turn();
     }
 
     @Override
