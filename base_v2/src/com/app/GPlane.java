@@ -73,7 +73,7 @@ public class GPlane extends Plane {
 
     public void toTOParts() {
         if (takeoff == null) {
-            takeoff = Direction.NORTH;
+            takeoff = Direction.SOUTH;
         }
         targets[0] = new double[]{gateCoords[0], gateCoords[1]};
         targets[1] = new double[]{a.rect.getX(), a.rect.getCenterY()};
@@ -98,10 +98,11 @@ public class GPlane extends Plane {
     @Override
     public void move() {
         if (takingoff) {
-            target[1] = 0;
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * move;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * move;
-            orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]); //TODO: add toAPlane()
+            if (coords[1] < 20 || coords[1] > 700) {
+                toAPlane();//TODO: add toAPlane()
+            }
         } else if (!wait) {
             if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= move * 2) {
                 coords[0] = target[0];
@@ -118,15 +119,23 @@ public class GPlane extends Plane {
     private void changeTarget() {
         if (index < 4) {
             target = targets[++index];
+            orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
         } else if (index == 4 && !pastGate) {
             toTOParts();
             index = 0;
             pastGate = true;
+            orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
             //AT GATE
         } else {
             takingoff = true;
+            if (takeoff == Direction.NORTH) {
+                target[1] = 0;
+                orientation = 360;
+            } else {
+                target[1] = -800;
+                orientation = 180;
+            }
         }
-        orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
         System.out.println(this.toString());
     }
 
@@ -148,7 +157,11 @@ public class GPlane extends Plane {
 
     public void toAPlane() { //TODO: set to LEAVE AIRSPACE
         airport.planes.remove(this);
-        new APlane(this, Math.random() * 360);
+        if (this.takeoff == Direction.NORTH)
+            new APlane(this, APlane.GATE.NORTH);
+        else
+            new APlane(this, APlane.GATE.SOUTH);
+        System.out.println("APlane made");
     }
 
     enum Direction {

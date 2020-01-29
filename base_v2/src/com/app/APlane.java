@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class APlane extends Plane {
     private double angleFromRunway;
+    private boolean depart = false;
     public GATE mGate;
     enum GATE {
         NORTH,
@@ -17,19 +18,25 @@ public class APlane extends Plane {
         airspace.planes.add(this);
         this.airport = airport;
         gate = 1;
-        //TODO: in algorithm, set gate on spawn
         spawn();
     }
 
-    public APlane(Plane p, double a) {
-        angleFromRunway = a;
-        coords = new double[]{(100 * Math.cos(Math.toRadians(angleFromRunway))), (100 * Math.sin(Math.toRadians(angleFromRunway)))};
+    public APlane(Plane p, GATE g) { //gate determines direction of takeoff
+        this.mGate = g;
+        coords = new double[]{0, 0};
         this.airport = p.airport;
         this.airspace = p.airspace;
+        depart = true;
+        if (g == GATE.NORTH)
+            target = new double[]{0, 1000};
+        else
+            target = new double[]{0, -1000};
+
+        orientation = angleOf(coords[0], coords[1], target[0], target[1]);
+        System.out.println(this.toString());
         airspace.planes.add(this);
-        gate = 1;
+        speed = 10; //TEMP
         //TODO: in algorithm, set gate on spawn
-        //TODO: set departing status, make plane leave
     }
 
     private void turn() { //TODO: make turning more smooth, gradual
@@ -66,28 +73,46 @@ public class APlane extends Plane {
 
     @Override
     protected void move() {
-        turn();
-        coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
-        coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+        if (!depart) {
+            turn();
+            coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
+            coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+        } else {
+            if (mGate == GATE.NORTH)
+                coords[1] -= speed / 10.0;
+            else
+                coords[1] += speed / 10.0;
+        }
     }
 
     @Override
     public void paint(Graphics2D g2d) {
         move();
         g2d.drawOval((int) coords[0], (int) coords[1], 5, 5);
-        if (mGate == GATE.NORTH) {
-            g2d.drawLine((int) coords[0], (int) coords[1], 0, 35);
-        } else if (mGate == GATE.SOUTH) {
-            g2d.drawLine((int) coords[0], (int) coords[1], 0, -35);
+        if (!depart) {
+            if (mGate == GATE.NORTH) {
+                g2d.drawLine((int) coords[0], (int) coords[1], 0, 35);
+            } else if (mGate == GATE.SOUTH) {
+                g2d.drawLine((int) coords[0], (int) coords[1], 0, -35);
+            }
         }
     }
 
+    @Override
+    public String toString() {
+        return "APlane {" + coords[0] + ", " + coords[1] +
+                "}\n\theading " + orientation +
+                "\n\ttowards {" + target[0] + ", " + target[1];
+    }
+
     public void toGPlane() {
-        airspace.planes.remove(this);
-        if (mGate == GATE.NORTH)
-            new GPlane(this, GPlane.Direction.SOUTH);
-        else
-            new GPlane(this, GPlane.Direction.NORTH);
+        if (!depart) {
+            airspace.planes.remove(this);
+            if (mGate == GATE.NORTH)
+                new GPlane(this, GPlane.Direction.SOUTH);
+            else
+                new GPlane(this, GPlane.Direction.NORTH);
+        }
     }
 }
 

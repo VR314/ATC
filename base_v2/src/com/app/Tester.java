@@ -8,13 +8,13 @@ public class Tester {
         Airport jfk = new Airport();
         Airspace space = new Airspace();
 
-        //JFrame frame = setupAirportFrame(jfk);
-        //new GPlane(jfk, (int)  (Math.random() * 6) + 1, GPlane.Direction.NORTH, space); //
+        JFrame frame = setupAirportFrame(jfk);
+        new GPlane(jfk, (int) (Math.random() * 6) + 1, GPlane.Direction.NORTH, space); //
 
         JFrame frame2 = setupAirspaceFrame(space);
-        new APlane(Math.random() * 360, jfk, space);
-        new APlane(Math.random() * 360, jfk, space);
-        new APlane(Math.random() * 360, jfk, space);
+        //new APlane(Math.random() * 360, jfk, space);
+        //new APlane(Math.random() * 360, jfk, space);
+        //new APlane(Math.random() * 360, jfk, space);
     }
 
     static JFrame setupAirportFrame(Airport airport) {
