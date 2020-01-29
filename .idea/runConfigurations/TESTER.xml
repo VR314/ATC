@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TESTER" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="main.app.Tester" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
