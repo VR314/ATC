@@ -31,8 +31,4 @@ public class Drivable {
         g2d.setColor(Color.blue);
         g2d.fillOval(target[0], target[1], 4, 4);
     }
-
-    public final String type() {
-        return this.getClass().getName() + " {" + target[0] + ", " + target[1] + "}";
-    }
 }

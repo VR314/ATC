@@ -57,9 +57,9 @@ public class Airport extends JPanel {
         g2d.setColor(Color.black);
         g2d.fill(r.rect);
 
-        for (GPlane p : planes) {
+        for (int i = 0; i < planes.size(); i++) {
             //System.out.println(p.toString());
-            p.paint(g2d);
+            planes.get(i).paint(g2d);
         }
         try {
             Thread.sleep(TICK);
