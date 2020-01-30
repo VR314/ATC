@@ -26,6 +26,7 @@ public class Scenario implements Runnable {
     public void run() {
         setup();
         ((APlane) As.get(100)).spawn();
+        ((GPlane) Gs.get(30)).spawn();
     }
 
     public void setup() {
