@@ -13,14 +13,13 @@ public class APlane extends Plane {
         SOUTH,
     }
 
-    public APlane(double a, Airport airport, Airspace airspace) {
+    public APlane(double a, Airport airport, Airspace airspace, int id) {
         angleFromRunway = a;
         coords = new double[]{(100 * Math.cos(Math.toRadians(angleFromRunway))), (100 * Math.sin(Math.toRadians(angleFromRunway)))};
         this.airspace = airspace;
-        airspace.planes.add(this);
         this.airport = airport;
         gate = 1;
-        spawn();
+        this.id = id;
     }
 
     public APlane(Plane p, GATE g) { //gate determines direction of takeoff
@@ -59,8 +58,9 @@ public class APlane extends Plane {
     }
 
     @Override
-    protected void spawn() {
+    public void spawn() { //call spawn() to spawn in airspace - algorithm
         orientation = 0 - angleFromRunway;
+        airspace.planes.add(this);
         while (angleFromRunway < 0) {
             angleFromRunway += 360;
         }

@@ -8,14 +8,18 @@ public class Tester {
         Airspace space = new Airspace();
 
         JFrame frame = setupAirportFrame(jfk);
-        new GPlane(jfk, (int) (Math.random() * 6) + 1, GPlane.Direction.NORTH, space);
-
+        //new GPlane(jfk, (int) (Math.random() * 6) + 1, GPlane.Direction.NORTH, space, 1);
+        Runnable target;
+        Thread t = new Thread(new Scenario(new Time(100), jfk, space));
+        t.start();
         JFrame frame2 = setupAirspaceFrame(space);
-        new APlane(Math.random() * 360, jfk, space);
+        /*
+        APlane p = new APlane(Math.random() * 360, jfk, space, 2);
         Thread.sleep(1000);
-        new APlane(Math.random() * 360, jfk, space);
+        new APlane(Math.random() * 360, jfk, space, 3);
         Thread.sleep(1000);
-        new GPlane(jfk, (int) (Math.random() * 6) + 1, GPlane.Direction.NORTH, space);
+        new GPlane(jfk, (int) (Math.random() * 6) + 1, GPlane.Direction.NORTH, space, 4);
+        */
     }
 
     static JFrame setupAirportFrame(Airport airport) {

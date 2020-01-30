@@ -17,7 +17,6 @@ public class GPlane extends Plane {
     public GPlane(Plane p, Direction d) {
         land = d;
         this.airport = p.airport;
-        this.airport.planes.add(this);
         this.airspace = p.airspace;
         //parts = p.airport.parts;
         this.gate = p.gate;
@@ -29,18 +28,18 @@ public class GPlane extends Plane {
             coords = new double[]{680, 700};
         spawn();
         System.out.println(this.toString());
-    } //TODO: spawn plane @ gate
+    }
 
-    public GPlane(Airport airport, int gate, Direction d, Airspace airspace) {
-        land = d;
+    public GPlane(Airport airport, int gate, Direction d, Airspace airspace, int id) { //TODO: spawn plane @ gate
+        takeoff = d;
         this.airport = airport;
-        this.airport.planes.add(this);
         this.airspace = airspace;
         this.gate = gate;
         this.gateCoords = airport.gates[6 - gate].target;
-        toGateParts();
-        coords = new double[]{680, 0};
-        spawn();
+        pastGate = true;
+        toTOParts();
+        coords = new double[]{(double) gateCoords[0], (double) gateCoords[1]};
+        this.id = id;
     }
 
     enum Direction {
@@ -49,6 +48,39 @@ public class GPlane extends Plane {
     }
 
     public void toGateParts() {
+        setApron();
+        if (land == Direction.NORTH) {
+            targets[0] = new double[]{airport.r.rect.getCenterX(), airport.parts[2].getCenterY()};
+        } else {
+            targets[0] = new double[]{airport.r.rect.getCenterX(), airport.parts[1].getCenterY()};
+        }
+        targets[1] = new double[]{airport.parts[0].getCenterX(), targets[0][1]};
+        targets[2] = new double[]{targets[1][0], a.rect.getCenterY()};
+        targets[3] = new double[]{a.rect.getX(), targets[2][1]};
+        targets[4] = new double[]{gateCoords[0], gateCoords[1]};
+    }
+
+    public void toTOParts() {
+        if (takeoff == null) {
+            takeoff = Direction.SOUTH;
+        }
+        if (a == null) {
+            setApron();
+        }
+        targets[0] = new double[]{gateCoords[0], gateCoords[1]};
+        targets[1] = new double[]{a.rect.getX(), a.rect.getCenterY()};
+        targets[2] = new double[]{airport.parts[0].getCenterX(), targets[1][1]};
+        if (takeoff == Direction.NORTH) {
+            targets[3] = new double[]{targets[2][0], airport.parts[2].getCenterY()};
+        } else {
+            targets[3] = new double[]{targets[2][0], airport.parts[1].getCenterY()};
+        }
+        targets[4] = new double[]{airport.r.rect.getCenterX(), targets[3][1]};
+        //targets[0] = new double[]{airport.r.rect.getCenterX(), airport.parts[land.ordinal() + 1].getCenterY()};
+        //targets[1] = new double[]{airport.parts[0].getCenterX(), targets[0][1]};
+    }
+
+    private void setApron() {
         switch (gate) {
             case 1:
             case 2:
@@ -65,39 +97,13 @@ public class GPlane extends Plane {
             default:
                 break;
         }
-        if (land == Direction.NORTH) {
-            targets[0] = new double[]{airport.r.rect.getCenterX(), airport.parts[2].getCenterY()};
-        } else {
-            targets[0] = new double[]{airport.r.rect.getCenterX(), airport.parts[1].getCenterY()};
-        }
-        targets[1] = new double[]{airport.parts[0].getCenterX(), targets[0][1]};
-        targets[2] = new double[]{targets[1][0], a.rect.getCenterY()};
-        targets[3] = new double[]{a.rect.getX(), targets[2][1]};
-        targets[4] = new double[]{gateCoords[0], gateCoords[1]};
-    }
-
-    public void toTOParts() {
-        if (takeoff == null) {
-            takeoff = Direction.SOUTH;
-        }
-        targets[0] = new double[]{gateCoords[0], gateCoords[1]};
-        targets[1] = new double[]{a.rect.getX(), a.rect.getCenterY()};
-        targets[2] = new double[]{airport.parts[0].getCenterX(), targets[1][1]};
-        if (takeoff == Direction.NORTH) {
-            targets[3] = new double[]{targets[2][0], airport.parts[2].getCenterY()};
-        } else {
-            targets[3] = new double[]{targets[2][0], airport.parts[1].getCenterY()};
-        }
-        targets[4] = new double[]{airport.r.rect.getCenterX(), targets[3][1]};
-        //targets[0] = new double[]{airport.r.rect.getCenterX(), airport.parts[land.ordinal() + 1].getCenterY()};
-        //targets[1] = new double[]{airport.parts[0].getCenterX(), targets[0][1]};
     }
 
     @Override
-    public void spawn() {
+    public void spawn() { //call from algorithm
         target = targets[0];
         orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
-        this.id = airport.planes.indexOf(this);
+        this.airport.planes.add(this);
     }
 
     @Override

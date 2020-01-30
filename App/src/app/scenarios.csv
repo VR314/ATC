@@ -1,12 +1,4 @@
-G                        |
-157                      |2    |N
-125                      |3    |S
-                         |
-
-id                       |gate#|(char)direction|TO-TIME  |LEAVE AIRSPACE TIME
----DELETE WHEN RUNNING---
-id                       |angle|LAND-TIME      |GATE-TIME|ATGATE-TIME (int minutes)|TO-TIME|LEAVE AIRSPACE TIME
-
-A                        |
-121                      |100  |
-873                      |360  |
+30;G;157;2;N;100;200;;
+70;G;125;3;S;200;300;;
+50;A;121;100;100;200;300;400;500
+100;A;873;360;200;300;400;500;600
