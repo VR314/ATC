@@ -1,5 +1,6 @@
 package app;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,20 +14,31 @@ public class Scenario implements Runnable {
     private String filepath = "App\\src\\app\\scenarios.csv";
     private Airport airport;
     private Airspace airspace;
-
+    private JLabel label;
     private Time time;
-    private int lastTime = 0;
 
-    public Scenario(Time t, Airport airport, Airspace airspace) {
+    public Scenario(Time t, Airport airport, Airspace airspace, JLabel label) {
         this.time = t;
         this.airport = airport;
         this.airspace = airspace;
+        this.label = label;
     }
 
     public void run() {
         setup();
-        ((APlane) As.get(100)).spawn();
-        ((GPlane) Gs.get(30)).spawn();
+        long mins = -999;
+        while (true) {//As.size() > 0 && Gs.size() > 0 ){
+            if (time.getMins() != mins) {
+                mins = time.getMins();
+                System.out.println(time.format());
+                if (As.containsKey((int) mins)) {
+                    ((APlane) As.remove((int) mins)).spawn();
+                }
+                if (Gs.containsKey((int) mins)) {
+                    ((GPlane) Gs.remove((int) mins)).spawn();
+                }
+            }
+        }
     }
 
     public void setup() {

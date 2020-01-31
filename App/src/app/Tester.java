@@ -1,6 +1,7 @@
 package app;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Tester {
     public static void main(String[] args) throws InterruptedException {
@@ -8,17 +9,18 @@ public class Tester {
         Airspace space = new Airspace();
 
         JFrame frame = setupAirportFrame(jfk);
-        //new GPlane(jfk, (int) (Math.random() * 6) + 1, GPlane.Direction.NORTH, space, 1);
-        Runnable target;
-        Thread t = new Thread(new Scenario(new Time(100), jfk, space));
-        t.start();
-        JFrame frame2 = setupAirspaceFrame(space);
-        /*
+        JLabel label = new JLabel("", SwingConstants.NORTH_EAST);
+        JFrame frame2 = setupAirspaceFrame(space, label);
+        Thread t = new Thread(new Scenario(new Time(200), jfk, space, label));
         APlane p = new APlane(Math.random() * 360, jfk, space, 2);
+        t.start();
+        /*
+
         Thread.sleep(1000);
         new APlane(Math.random() * 360, jfk, space, 3);
         Thread.sleep(1000);
         new GPlane(jfk, (int) (Math.random() * 6) + 1, GPlane.Direction.NORTH, space, 4);
+        new GPlane(jfk, (int) (Math.random() * 6) + 1, GPlane.Direction.NORTH, space, 1);
         */
     }
 
@@ -32,13 +34,17 @@ public class Tester {
         return frame;
     }
 
-    static JFrame setupAirspaceFrame(Airspace space) {
+    static JFrame setupAirspaceFrame(Airspace space, JLabel label) {
         JFrame frame = new JFrame();
         frame.setSize(750, 500);
         frame.add(space);
         frame.setAlwaysOnTop(true);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        label.setBounds(650, 400, 100, 100);
+        label.setForeground(Color.white);
+        label.setBackground(Color.black);
+        frame.add(label);
         return frame;
     }
 }
