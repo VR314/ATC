@@ -2,7 +2,7 @@ package app;
 
 import java.awt.*;
 
-public abstract class Plane { //ALGORITHMS MAINLY LOOK @ THIS CLASS
+public abstract class Plane {
     public double[] coords;
     public int gate;
     public Airspace airspace;
@@ -24,5 +24,4 @@ public abstract class Plane { //ALGORITHMS MAINLY LOOK @ THIS CLASS
         final double result = Math.toDegrees(Math.atan2(deltaY, deltaX));
         return (result < 0) ? (360 + result) : result;
     }
-
 }

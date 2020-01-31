@@ -22,8 +22,9 @@ public class APlane extends Plane {
         this.id = id;
     }
 
-    public APlane(Plane p, GATE g) { //gate determines direction of takeoff
+    public APlane(Plane p, GATE g, int id) { //gate determines direction of takeoff
         this.mGate = g;
+        this.id = id;
         coords = new double[]{0, 0};
         this.airport = p.airport;
         this.airspace = p.airspace;
@@ -80,15 +81,25 @@ public class APlane extends Plane {
                 turn();
                 coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
                 coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+
             } else {
                 if (mGate == GATE.NORTH)
                     coords[1] -= speed / 10.0;
                 else
                     coords[1] += speed / 10.0;
+
+                if(coords[1] > 200 || coords[1] < -250){
+                    leaveAirspace();
+                }
             }
         } else {
             //TODO: implement go-around
         }
+    }
+
+    private void leaveAirspace() {
+        this.airspace.planes.remove(this);
+        System.out.println("APlane #" + id + " has left the airspace");
     }
 
     @Override
@@ -115,9 +126,9 @@ public class APlane extends Plane {
         if (!depart) {
             airspace.planes.remove(this);
             if (mGate == GATE.NORTH)
-                new GPlane(this, GPlane.Direction.SOUTH);
+                new GPlane(this, GPlane.Direction.SOUTH, this.id);
             else
-                new GPlane(this, GPlane.Direction.NORTH);
+                new GPlane(this, GPlane.Direction.NORTH, this.id);
         }
     }
 }

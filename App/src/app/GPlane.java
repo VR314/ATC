@@ -14,11 +14,11 @@ public class GPlane extends Plane {
     Direction takeoff; //towards
     Direction land; //from
 
-    public GPlane(Plane p, Direction d) {
+    public GPlane(Plane p, Direction d, int id) {
         land = d;
+        this.id = id;
         this.airport = p.airport;
         this.airspace = p.airspace;
-        //parts = p.airport.parts;
         this.gate = p.gate;
         this.gateCoords = airport.gates[6 - gate].target;
         toGateParts();
@@ -43,7 +43,7 @@ public class GPlane extends Plane {
     }
 
     enum Direction {
-        NORTH, //from north, TOWARDS NORTH T/O
+        NORTH, //from north LAND, TOWARDS NORTH T/O
         SOUTH
     }
 
@@ -76,8 +76,6 @@ public class GPlane extends Plane {
             targets[3] = new double[]{targets[2][0], airport.parts[1].getCenterY()};
         }
         targets[4] = new double[]{airport.r.rect.getCenterX(), targets[3][1]};
-        //targets[0] = new double[]{airport.r.rect.getCenterX(), airport.parts[land.ordinal() + 1].getCenterY()};
-        //targets[1] = new double[]{airport.parts[0].getCenterX(), targets[0][1]};
     }
 
     private void setApron() {
@@ -112,7 +110,7 @@ public class GPlane extends Plane {
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * move;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * move;
             if (coords[1] < 20 || coords[1] > 700) {
-                toAPlane();//TODO: add toAPlane()
+                toAPlane();
             }
         } else if (!wait) {
             if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= move * 2) {
@@ -166,14 +164,11 @@ public class GPlane extends Plane {
                 "\n\t index: " + index;
     }
 
-    public void toAPlane() { //TODO: set to LEAVE AIRSPACE
+    public void toAPlane() {
         airport.planes.remove(this);
         if (this.takeoff == Direction.NORTH)
-            new APlane(this, APlane.GATE.NORTH);
+            new APlane(this, APlane.GATE.NORTH, this.id);
         else
-            new APlane(this, APlane.GATE.SOUTH);
-        System.out.println("APlane made");
+            new APlane(this, APlane.GATE.SOUTH, this.id);
     }
-
-
 }
