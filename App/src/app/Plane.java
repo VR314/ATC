@@ -11,13 +11,15 @@ public abstract class Plane {
     protected int speed;
     protected double orientation;
     public Airport airport;
-
+    public int[] pTimes; //{LANDtime, atGatetime, leaveGatetime, TOtime, LEAVEtime}
+    public int[] actualTimes;
+    
     protected abstract void spawn();
-
+    
     protected abstract void move();
-
+    
     protected abstract void paint(Graphics2D g2d);
-
+    
     protected final double angleOf(double x1, double y1, double x2, double y2) {
         final double deltaY = (y2 - y1);
         final double deltaX = (x2 - x1);

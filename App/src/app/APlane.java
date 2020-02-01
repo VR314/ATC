@@ -5,26 +5,31 @@ import java.awt.*;
 public class APlane extends Plane {
     private double angleFromRunway;
     public boolean goAround = false; //controllable by algorithm
-    private boolean depart = false; //controllable by algorithm
+    private boolean depart = false;
     public GATE mGate;
 
     enum GATE {
         NORTH,
         SOUTH,
     }
-
-    public APlane(double a, Airport airport, Airspace airspace, int id) {
+    
+    public APlane(double a, Airport airport, Airspace airspace, int id, int[] times) { //used by Scenario
         angleFromRunway = a;
         coords = new double[]{(100 * Math.cos(Math.toRadians(angleFromRunway))), (100 * Math.sin(Math.toRadians(angleFromRunway)))};
         this.airspace = airspace;
         this.airport = airport;
         gate = 1;
         this.id = id;
+        this.pTimes = times;
+        this.actualTimes = new int[pTimes.length];
+        speed = 300;
     }
-
-    public APlane(Plane p, GATE g, int id) { //gate determines direction of takeoff
+    
+    public APlane(Plane p, GATE g) { //gate determines direction of takeoff
         this.mGate = g;
-        this.id = id;
+        this.pTimes = p.pTimes;
+        this.actualTimes = new int[pTimes.length];
+        this.id = p.id;
         coords = new double[]{0, 0};
         this.airport = p.airport;
         this.airspace = p.airspace;
@@ -33,11 +38,11 @@ public class APlane extends Plane {
             target = new double[]{0, 1000};
         else
             target = new double[]{0, -1000};
-
+        
         orientation = angleOf(coords[0], coords[1], target[0], target[1]);
         System.out.println(this.toString());
         airspace.planes.add(this);
-        speed = 10; //TEMP
+        speed = 100; //TEMP
         //TODO: in algorithm, set gate on spawn
     }
 
@@ -57,9 +62,9 @@ public class APlane extends Plane {
         }
         angleFromRunway = 0 - orientation;
     }
-
+    
     @Override
-    public void spawn() { //call spawn() to spawn in airspace - algorithm
+    public void spawn() {
         orientation = 0 - angleFromRunway;
         airspace.planes.add(this);
         while (angleFromRunway < 0) {
@@ -70,8 +75,6 @@ public class APlane extends Plane {
         } else {
             mGate = GATE.SOUTH;
         }
-        speed = 15;
-        //turn();
     }
 
     @Override
@@ -79,16 +82,21 @@ public class APlane extends Plane {
         if (!goAround) {
             if (!depart) {
                 turn();
-                coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
-                coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
-
+                coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 100;
+                coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
+                if (speed > 175) {
+                    speed *= 0.95;
+                }
+    
             } else {
+                if (speed < 300)
+                    speed *= 1.005;
                 if (mGate == GATE.NORTH)
-                    coords[1] -= speed / 10.0;
+                    coords[1] -= speed / 100.00;
                 else
-                    coords[1] += speed / 10.0;
-
-                if(coords[1] > 200 || coords[1] < -250){
+                    coords[1] += speed / 100.00;
+    
+                if (coords[1] > 200 || coords[1] < -250) {
                     leaveAirspace();
                 }
             }
@@ -119,16 +127,16 @@ public class APlane extends Plane {
     public String toString() {
         return "APlane {" + coords[0] + ", " + coords[1] +
                 "}\n\theading " + orientation +
-                "\n\ttowards {" + target[0] + ", " + target[1];
+                "\n\ttowards {" + target[0] + ", " + target[1] + "}";
     }
 
     public void toGPlane() {
         if (!depart) {
             airspace.planes.remove(this);
             if (mGate == GATE.NORTH)
-                new GPlane(this, GPlane.Direction.SOUTH, this.id);
+                new GPlane(this, GPlane.Direction.SOUTH);
             else
-                new GPlane(this, GPlane.Direction.NORTH, this.id);
+                new GPlane(this, GPlane.Direction.NORTH);
         }
     }
 }

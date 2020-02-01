@@ -57,22 +57,21 @@ public class Scenario implements Runnable {
                     } else {
                         d = GPlane.Direction.SOUTH;
                     }
+                    int leaveGateTime = Integer.parseInt(line.remove(0));
                     int TOtime = Integer.parseInt(line.remove(0));
                     int LEAVEtime = Integer.parseInt(line.remove(0));
-                    GPlane g = new GPlane(airport, gate, d, airspace, id);
-                    //TODO: add TO and LEAVEtime to object
+                    GPlane g = new GPlane(airport, gate, d, airspace, id, new int[]{-100, time, leaveGateTime, TOtime, LEAVEtime}); //NEGATIVE = NULL
                     Gs.put(time, g);
 
                 } else {
                     int id = Integer.parseInt(line.remove(0));
                     int angle = Integer.parseInt(line.remove(0));
                     int LANDtime = Integer.parseInt(line.remove(0));
-                    int GATEtime = Integer.parseInt(line.remove(0));
-                    int atGATEtime = Integer.parseInt(line.remove(0));
+                    int atGatetime = Integer.parseInt(line.remove(0));
+                    int leaveGatetime = Integer.parseInt(line.remove(0));
                     int TOtime = Integer.parseInt(line.remove(0));
                     int LEAVEtime = Integer.parseInt(line.remove(0));
-                    APlane a = new APlane(angle, airport, airspace, id);
-                    //TODO: add times to object
+                    APlane a = new APlane(angle, airport, airspace, id, new int[]{LANDtime, atGatetime, leaveGatetime, TOtime, LEAVEtime});
                     As.put(time, a);
                 }
             }
