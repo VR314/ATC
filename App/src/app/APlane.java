@@ -3,19 +3,37 @@ package app;
 import java.awt.*;
 
 public class APlane extends Plane {
-    private double angleFromRunway;
+    /**
+     * if set to true - APlane will abort takeoff and go around
+     */
     public boolean goAround = false; //controllable by algorithm
-    private boolean depart = false;
+    /**
+     * the metered gate from which to initiate landing.
+     */
     public GATE mGate;
-
+    /**
+     * used to set when the APlane is set to leave the Airspace after taking off
+     */
+    private boolean depart = false;
+    
     enum GATE {
         NORTH,
         SOUTH,
     }
     
+    /**
+     * <p>
+     * The constructor used by the Scenario class
+     * </p>
+     *
+     * @param a        the angle from the runway to spawn the APlane
+     * @param airport  the Airport attached to the object - useful when converting to GPlane on landing
+     * @param airspace the Airspace to fly through
+     * @param id       the id of the plane, used in toString() and generating it from the Scenario class
+     * @param times    the array of plannedTimes (ETAs)
+     */
     public APlane(double a, Airport airport, Airspace airspace, int id, int[] times) { //used by Scenario
-        angleFromRunway = a;
-        coords = new double[]{(100 * Math.cos(Math.toRadians(angleFromRunway))), (100 * Math.sin(Math.toRadians(angleFromRunway)))};
+        coords = new double[]{(100 * Math.cos(Math.toRadians(a))), (100 * Math.sin(Math.toRadians(a)))};
         this.airspace = airspace;
         this.airport = airport;
         gate = 1;
@@ -23,6 +41,15 @@ public class APlane extends Plane {
         this.pTimes = times;
         this.actualTimes = new int[pTimes.length];
         speed = 300;
+        while (a < 0) {
+            a += 360;
+        }
+        if (a < 180) {
+            mGate = GATE.NORTH;
+        } else {
+            mGate = GATE.SOUTH;
+        }
+        orientation = 0 - a;
     }
     
     public APlane(Plane p, GATE g) { //gate determines direction of takeoff
@@ -60,21 +87,11 @@ public class APlane extends Plane {
         while (orientation > 360) {
             orientation -= 360;
         }
-        angleFromRunway = 0 - orientation;
     }
     
     @Override
     public void spawn() {
-        orientation = 0 - angleFromRunway;
         airspace.planes.add(this);
-        while (angleFromRunway < 0) {
-            angleFromRunway += 360;
-        }
-        if (angleFromRunway < 180) {
-            mGate = GATE.NORTH;
-        } else {
-            mGate = GATE.SOUTH;
-        }
     }
 
     @Override

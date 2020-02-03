@@ -7,12 +7,26 @@ import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 
 public class Airspace extends JPanel {
-    public LinkedList<APlane> planes;
-
+    /**
+     * The list of planes in the Airspace's scope
+     */
+    public LinkedList<APlane> planes = new LinkedList<APlane>();
+    
+    /**
+     * Constructor requires no arguments - empty constructor
+     */
     public Airspace() {
-        planes = new LinkedList<APlane>();
     }
-
+    
+    /**
+     * <p>
+     * Overridden method from the JPanel class that draws the Airspace and any planes in the scope of the Airspace, refreshing every 100 ms.
+     * </p>
+     *
+     * @param g Default graphics object, part of the parent JPanel class
+     *
+     * @throws ConcurrentModificationException Concurrent deletion in and iteration of the planes list
+     */
     @Override
     protected void paintComponent(Graphics g) throws ConcurrentModificationException {
         super.paintComponent(g);
