@@ -6,7 +6,7 @@ import java.awt.*;
 public class Tester {
     public static void main(String[] args){
         Airport jfk = new Airport();
-        Airspace space = new Airspace();
+        Airspace space = new Airspace(jfk);
         JFrame frame = setupAirportFrame(jfk);
         JFrame frame2 = setupAirspaceFrame(space);
         JLabel label = new JLabel("", SwingConstants.NORTH_EAST);

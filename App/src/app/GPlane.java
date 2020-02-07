@@ -114,6 +114,9 @@ public class GPlane extends Plane {
 
     @Override
     public void move() {
+        if(coords[0] == airport.r.rect.getCenterX()){
+            airport.r.full = true;
+        }
         if (takingoff) {
             this.airport.r.full = true;
             if (speed < 250)

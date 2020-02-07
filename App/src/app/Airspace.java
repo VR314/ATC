@@ -11,11 +11,13 @@ public class Airspace extends JPanel {
      * The list of planes in the Airspace's scope
      */
     public LinkedList<APlane> planes = new LinkedList<APlane>();
+    public Airport airport;
     
     /**
      * Constructor requires no arguments - empty constructor
      */
-    public Airspace() {
+    public Airspace(Airport airport) {
+        this.airport = airport;
     }
     
     /**
