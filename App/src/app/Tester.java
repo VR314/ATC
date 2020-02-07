@@ -14,11 +14,11 @@ public class Tester {
         label.setForeground(Color.white);
         label.setBackground(Color.black);
         frame2.add(label);
-        Thread t = new Thread(new Scenario(new Time(300), jfk, space, label));
+        Thread t = new Thread(new Scenario(new Time(300), jfk, space));
         t.start();
     }
-
-    static JFrame setupAirportFrame(Airport airport) {
+    
+    public static JFrame setupAirportFrame(Airport airport) {
         JFrame frame = new JFrame();
         frame.setSize(750, 700);
         frame.add(airport);
@@ -27,8 +27,8 @@ public class Tester {
         //frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         return frame;
     }
-
-    static JFrame setupAirspaceFrame(Airspace space) {
+    
+    public static JFrame setupAirspaceFrame(Airspace space) {
         JFrame frame = new JFrame();
         frame.setSize(750, 500);
         frame.add(space);

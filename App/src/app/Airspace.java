@@ -44,7 +44,7 @@ public class Airspace extends JPanel {
                 plane.paint(g2d);
         }
         try {
-            Thread.sleep(100);
+            Thread.sleep(150);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

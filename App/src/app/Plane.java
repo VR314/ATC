@@ -3,6 +3,7 @@ package app;
 import java.awt.*;
 
 public abstract class Plane {
+    public Time time;
     public double[] coords;
     public int gate;
     public Airspace airspace;

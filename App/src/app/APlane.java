@@ -1,6 +1,8 @@
 package app;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class APlane extends Plane {
     /**
@@ -41,6 +43,7 @@ public class APlane extends Plane {
         this.pTimes = times;
         this.actualTimes = new int[pTimes.length];
         speed = 300;
+    
         while (a < 0) {
             a += 360;
         }
@@ -49,12 +52,19 @@ public class APlane extends Plane {
         } else {
             mGate = GATE.SOUTH;
         }
+    
+        if (mGate == GATE.NORTH)
+            target = new double[]{0, 1000};
+        else
+            target = new double[]{0, -1000};
+    
         orientation = 0 - a;
     }
     
     public APlane(Plane p, GATE g) { //gate determines direction of takeoff
         this.mGate = g;
         this.pTimes = p.pTimes;
+        this.time = p.time;
         this.actualTimes = new int[pTimes.length];
         this.id = p.id;
         coords = new double[]{0, 0};
@@ -118,13 +128,27 @@ public class APlane extends Plane {
                 }
             }
         } else {
-            //TODO: implement go-around
+            if (speed > 250)
+                speed *= 1.05;
+            coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 100;
+            coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
+            if (coords[1] > 70) {
+                mGate = GATE.NORTH;
+                target = new double[]{0, 35};
+                goAround = false;
+            } else if (coords[1] < -70) {
+                mGate = GATE.SOUTH;
+                target = new double[]{0, -35};
+                goAround = false;
+            }
         }
     }
 
     private void leaveAirspace() {
+        actualTimes[4] = (int) time.getMins();
         this.airspace.planes.remove(this);
         System.out.println("APlane #" + id + " has left the airspace");
+        System.out.println(new ArrayList(Arrays.asList(actualTimes)).toString());
     }
 
     @Override
@@ -148,7 +172,7 @@ public class APlane extends Plane {
     }
 
     public void toGPlane() {
-        if (!depart) {
+        if (!depart && !goAround) {
             airspace.planes.remove(this);
             if (mGate == GATE.NORTH)
                 new GPlane(this, GPlane.Direction.SOUTH);

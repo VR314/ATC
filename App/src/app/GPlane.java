@@ -29,7 +29,8 @@ public class GPlane extends Plane {
     }
     
     public GPlane(Plane p, Direction d) { //used by toGPlane()
-        land = d;
+        this.land = d;
+        this.time = p.time;
         this.id = p.id;
         this.airport = p.airport;
         this.airspace = p.airspace;
@@ -37,8 +38,8 @@ public class GPlane extends Plane {
         this.gateCoords = airport.gates[6 - gate].target;
         toGateParts();
         this.pTimes = p.pTimes;
-        this.actualTimes = p.actualTimes;
         this.actualTimes = new int[pTimes.length];
+        this.actualTimes[0] = (int) time.getMins();
         this.speed = p.speed;
         if (d == Direction.NORTH)
             coords = new double[]{680, -100};
@@ -114,14 +115,19 @@ public class GPlane extends Plane {
     @Override
     public void move() {
         if (takingoff) {
+            this.airport.r.full = true;
             if (speed < 250)
                 speed *= 1.1;
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
             if (coords[1] < 20 || coords[1] > 700) {
+                this.airport.r.full = false;
                 toAPlane();
             }
         } else if (!wait) {
+            if (actualTimes[2] != 0) {
+                actualTimes[2] = (int) time.getMins();
+            }
             if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= speed / 10 * 2) {
                 coords[0] = target[0];
                 coords[1] = target[1];
@@ -141,13 +147,15 @@ public class GPlane extends Plane {
             target = targets[++index];
             orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
         } else if (index == 4 && !pastGate) {
+            actualTimes[1] = (int) time.getMins();
             toTOParts();
             index = 0;
             pastGate = true;
             orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
-            //AT GATE
+            wait = true; //only changed by algorithm
         } else {
             takingoff = true;
+            actualTimes[3] = (int) time.getMins();
             if (takeoff == Direction.NORTH) {
                 target[1] = 0;
                 orientation = 360;

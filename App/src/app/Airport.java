@@ -7,18 +7,22 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
 public class Airport extends JPanel {
+    
     /**
      * The time in ms to refresh the Airport frame
      */
-    static final int TICK = 50; //in ms to refresh
+    static final int TICK = 25; //in ms to refresh
+    
     /**
      * The list of planes in the Airport's scope
      */
     public LinkedList<GPlane> planes = new LinkedList<>();
+    
     /**
      * The Runway of the Airport
      */
     public Runway r = new Runway(new Rectangle2D.Double(600, 75, 160, 525), new int[]{680, 578});
+    
     /**
      * The array of the Taxiway and the on/off ramps of the Runway to be printed
      */
@@ -26,6 +30,7 @@ public class Airport extends JPanel {
             new Rectangle2D.Double(350, 75, 100, 525),
             new Rectangle2D.Double(450, 75, 150, 37.5),
             new Rectangle2D.Double(450, 562.5, 150, 37.5)};
+    
     /**
      * The array of possible Aprons to be used in the GPlane class and to be drawn
      */
@@ -33,6 +38,7 @@ public class Airport extends JPanel {
             new Apron(new Rectangle2D.Double(275, 487.5, 75, 37.5), new int[]{275, 506}),
             new Apron(new Rectangle2D.Double(275, 337.5, 75, 37.5), new int[]{275, 356}),
             new Apron(new Rectangle2D.Double(275, 187.5, 75, 37.5), new int[]{275, 206})};
+    
     /**
      * The array of the 6 gates to be used in the GPlane class and to be drawn
      */
