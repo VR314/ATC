@@ -54,9 +54,9 @@ public class APlane extends Plane {
         }
     
         if (mGate == GATE.NORTH)
-            target = new double[]{0, 1000};
+            target = new double[]{0, 35};
         else
-            target = new double[]{0, -1000};
+            target = new double[]{0, -35};
     
         orientation = 0 - a;
     }
@@ -71,15 +71,13 @@ public class APlane extends Plane {
         this.airport = p.airport;
         this.airspace = p.airspace;
         depart = true;
-        if (g == GATE.NORTH)
-            target = new double[]{0, 1000};
-        else
-            target = new double[]{0, -1000};
-        
-        orientation = angleOf(coords[0], coords[1], target[0], target[1]);
-        System.out.println(this.toString());
         airspace.planes.add(this);
         speed = 100; //TEMP
+        if (mGate == GATE.NORTH) {
+            orientation = 0;
+        } else if (mGate == GATE.SOUTH) {
+            orientation = 180;
+        }
         //TODO: in algorithm, set gate on spawn
     }
 
@@ -114,20 +112,15 @@ public class APlane extends Plane {
                 if (speed > 175) {
                     speed *= 0.95;
                 }
-    
-            } else {
+        
+            } else { //if leaving
                 if (speed < 300)
                     speed *= 1.005;
-                if (mGate == GATE.NORTH)
-                    coords[1] -= speed / 100.00;
-                else
-                    coords[1] += speed / 100.00;
-    
-                if (coords[1] > 200 || coords[1] < -250) {
+                coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
+                if (coords[1] > 200 || coords[1] < -250)
                     leaveAirspace();
-                }
             }
-        } else {
+        } else { //if go-around
             if (speed > 250)
                 speed *= 1.05;
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 100;
@@ -136,7 +129,7 @@ public class APlane extends Plane {
                 mGate = GATE.NORTH;
                 target = new double[]{0, 35};
                 goAround = false;
-            } else if (coords[1] < -70) {
+            } else if (coords[1] < -70) { //TODO: implement distance for go-around, not just y-coord
                 mGate = GATE.SOUTH;
                 target = new double[]{0, -35};
                 goAround = false;

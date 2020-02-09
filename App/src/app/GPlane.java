@@ -48,12 +48,12 @@ public class GPlane extends Plane {
         spawn();
         System.out.println(this.toString());
     }
-
+    
     enum Direction {
         NORTH, //from north LAND, TOWARDS NORTH T/O
         SOUTH
     }
-
+    
     public void toGateParts() {
         setApron();
         if (land == Direction.NORTH) {
@@ -66,7 +66,7 @@ public class GPlane extends Plane {
         targets[3] = new double[]{a.rect.getX(), targets[2][1]};
         targets[4] = new double[]{gateCoords[0], gateCoords[1]};
     }
-
+    
     public void toTOParts() {
         if (takeoff == null) {
             takeoff = Direction.SOUTH;
@@ -82,9 +82,9 @@ public class GPlane extends Plane {
         } else {
             targets[3] = new double[]{targets[2][0], airport.parts[1].getCenterY()};
         }
-        targets[4] = new double[]{airport.r.rect.getCenterX(), targets[3][1]};
+        targets[4] = new double[]{airport.r.rect.getCenterX() - 100, targets[3][1]};
     }
-
+    
     private void setApron() {
         switch (gate) {
             case 1:
@@ -103,7 +103,7 @@ public class GPlane extends Plane {
                 break;
         }
     }
-
+    
     @Override
     public void spawn() { //call from algorithm
         target = targets[0];
@@ -111,21 +111,37 @@ public class GPlane extends Plane {
         orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
         this.airport.planes.add(this);
     }
-
+    
     @Override
     public void move() {
-        if(coords[0] == airport.r.rect.getCenterX()){
-            airport.r.full = true;
-        }
+        
         if (takingoff) {
-            this.airport.r.full = true;
-            if (speed < 250)
-                speed *= 1.1;
-            coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
-            coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
-            if (coords[1] < 20 || coords[1] > 700) {
-                this.airport.r.full = false;
-                toAPlane();
+            if (index == 4 && pastGate)
+                if (airport.r.full && actualTimes[3] == 0)
+                    return;
+            
+            if (Math.abs(coords[0] - airport.r.rect.getCenterX()) > 5) {
+                target[0] = airport.r.rect.getCenterX();
+                target[1] = coords[1];
+                coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
+            } else {
+                coords[0] = airport.r.rect.getCenterX();
+                actualTimes[3] = (int) time.getMins();
+                if (takeoff == Direction.NORTH) {
+                    orientation = 360;
+                    target[1] = 0;
+                } else {
+                    orientation = 180;
+                    target[1] = -800;
+                }
+                this.airport.r.full = true;
+                if (speed < 250)
+                    speed *= 1.1;
+                coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+                if (coords[1] < 20 || coords[1] > 700) {
+                    this.airport.r.full = false;
+                    toAPlane();
+                }
             }
         } else if (!wait) {
             if (actualTimes[2] != 0) {
@@ -135,7 +151,6 @@ public class GPlane extends Plane {
                 coords[0] = target[0];
                 coords[1] = target[1];
                 changeTarget();
-        
             } else {
                 if (speed > 50)
                     speed *= 0.998;
@@ -144,8 +159,12 @@ public class GPlane extends Plane {
             }
         }
     }
-
+    
     private void changeTarget() {
+        if (index == 0 && !pastGate) {
+            this.airport.r.full = true;
+        }
+        
         if (index < 4) {
             target = targets[++index];
             orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
@@ -158,25 +177,17 @@ public class GPlane extends Plane {
             wait = true; //only changed by algorithm
         } else {
             takingoff = true;
-            actualTimes[3] = (int) time.getMins();
-            if (takeoff == Direction.NORTH) {
-                target[1] = 0;
-                orientation = 360;
-            } else {
-                target[1] = -800;
-                orientation = 180;
-            }
         }
         System.out.println(this.toString());
     }
-
+    
     @Override
     public void paint(Graphics2D g2d) {
         move();
         g2d.setColor(Color.green);
         g2d.fillOval((int) coords[0], (int) coords[1], 5, 5);
     }
-
+    
     @Override
     public String toString() {
         return "GPlane #" + id + ": {" + coords[0] + ", " + coords[1] +
@@ -185,7 +196,7 @@ public class GPlane extends Plane {
                 "}\n\tgate: " + gate + " (" + gateCoords[0] + ", " + gateCoords[1] + ")" +
                 "\n\t index: " + index;
     }
-
+    
     public void toAPlane() {
         airport.planes.remove(this);
         if (this.takeoff == Direction.NORTH)

@@ -1,7 +1,6 @@
 package FCFS;
 
 import app.Airport;
-import app.GPlane;
 
 import java.awt.*;
 
@@ -17,9 +16,7 @@ public class FCFSAirport extends Airport {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (GPlane p : planes) {
-        
-        
-        }
+    
+    
     }
 }

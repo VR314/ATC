@@ -38,15 +38,15 @@ public class Airspace extends JPanel {
         g2d.setStroke(new BasicStroke(2));
         g2d.drawLine(0, 5, 0, -5);
         g2d.setStroke(new BasicStroke(1));
-        for (APlane plane : planes) {
-            if (Math.abs(plane.coords[0]) < 5 && Math.abs(plane.coords[1]) - 35 < 5) {
-                plane.paint(g2d);
-                plane.toGPlane();
+        for (int i = 0; i < planes.size(); i++) {
+            if (Math.abs(planes.get(i).coords[0]) < 5 && Math.abs(planes.get(i).coords[1]) - 35 < 5) {
+                planes.get(i).paint(g2d);
+                planes.get(i).toGPlane();
             } else
-                plane.paint(g2d);
+                planes.get(i).paint(g2d);
         }
         try {
-            Thread.sleep(150);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

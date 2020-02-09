@@ -8,7 +8,7 @@ public abstract class Plane {
     public int gate;
     public Airspace airspace;
     protected double[] target;
-    protected int id;
+    public int id;
     protected int speed;
     protected double orientation;
     public Airport airport;
