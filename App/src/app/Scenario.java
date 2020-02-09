@@ -8,19 +8,19 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Scenario implements Runnable {
+    public Time time;
     HashMap Gs = new HashMap<Integer, GPlane>();
     HashMap As = new HashMap<Integer, APlane>();
     private String filepath = "App\\src\\app\\scenarios.csv";
     private Airport airport;
     private Airspace airspace;
-    public Time time;
     
     public Scenario(Time t, Airport airport, Airspace airspace) {
         this.time = t;
         this.airport = airport;
         this.airspace = airspace;
     }
-
+    
     public void run() {
         setup();
         long mins = -999;
@@ -37,7 +37,7 @@ public class Scenario implements Runnable {
             }
         }
     }
-
+    
     public void setup() {
         String cvsSplitBy = ";";
         String sLine = "";
@@ -60,7 +60,7 @@ public class Scenario implements Runnable {
                     GPlane g = new GPlane(airport, gate, d, airspace, id, new int[]{-100, time, leaveGateTime, TOtime, LEAVEtime}); //NEGATIVE = NULL
                     g.time = this.time;
                     Gs.put(time, g);
-        
+    
                 } else {
                     int id = Integer.parseInt(line.remove(0).trim());
                     int angle = Integer.parseInt(line.remove(0).trim());
@@ -74,7 +74,7 @@ public class Scenario implements Runnable {
                     As.put(time, a);
                 }
             }
-
+    
         } catch (IOException e) {
             e.printStackTrace();
         }

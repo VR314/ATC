@@ -18,11 +18,6 @@ public class APlane extends Plane {
      */
     private boolean depart = false;
     
-    enum GATE {
-        NORTH,
-        SOUTH,
-    }
-    
     /**
      * <p>
      * The constructor used by the Scenario class
@@ -80,14 +75,14 @@ public class APlane extends Plane {
         }
         //TODO: in algorithm, set gate on spawn
     }
-
+    
     private void turn() { //TODO: make turning more smooth, gradual
         if (mGate == GATE.NORTH) {
             orientation = angleOf(coords[0], coords[1], 0, 35);
         } else if (mGate == GATE.SOUTH) {
             orientation = angleOf(coords[0], coords[1], 0, -35);
         }
-
+        
         orientation += 90;
         while (orientation < 0) {
             orientation += 360;
@@ -101,7 +96,7 @@ public class APlane extends Plane {
     public void spawn() {
         airspace.planes.add(this);
     }
-
+    
     @Override
     protected void move() {
         if (!goAround) {
@@ -112,7 +107,7 @@ public class APlane extends Plane {
                 if (speed > 175) {
                     speed *= 0.95;
                 }
-        
+    
             } else { //if leaving
                 if (speed < 300)
                     speed *= 1.005;
@@ -125,30 +120,30 @@ public class APlane extends Plane {
                 speed *= 1.05;
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 100;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
-            if (coords[1] > 70) {
+            if (airport.r.planes.isEmpty() && coords[1] >= 0) {
                 mGate = GATE.NORTH;
                 target = new double[]{0, 35};
                 goAround = false;
-            } else if (coords[1] < -70) { //TODO: implement distance for go-around, not just y-coord
+            } else if (airport.r.planes.isEmpty() && coords[1] < 0) { //TODO: implement distance for go-around, not just y-coord
                 mGate = GATE.SOUTH;
                 target = new double[]{0, -35};
                 goAround = false;
             }
         }
     }
-
+    
     private void leaveAirspace() {
         actualTimes[4] = (int) time.getMins();
         this.airspace.planes.remove(this);
         System.out.println("APlane #" + id + " has left the airspace");
         System.out.println(new ArrayList(Arrays.asList(actualTimes)).toString());
     }
-
+    
     @Override
     public void paint(Graphics2D g2d) {
         move();
         g2d.drawOval((int) coords[0], (int) coords[1], 5, 5);
-        if (!depart) {
+        if (!depart || !goAround) {
             if (mGate == GATE.NORTH) {
                 g2d.drawLine((int) coords[0], (int) coords[1], 0, 35);
             } else if (mGate == GATE.SOUTH) {
@@ -156,14 +151,14 @@ public class APlane extends Plane {
             }
         }
     }
-
+    
     @Override
     public String toString() {
         return "APlane {" + coords[0] + ", " + coords[1] +
                 "}\n\theading " + orientation +
                 "\n\ttowards {" + target[0] + ", " + target[1] + "}";
     }
-
+    
     public void toGPlane() {
         if (!depart && !goAround) {
             airspace.planes.remove(this);
@@ -172,6 +167,11 @@ public class APlane extends Plane {
             else
                 new GPlane(this, GPlane.Direction.NORTH);
         }
+    }
+    
+    enum GATE {
+        NORTH,
+        SOUTH,
     }
 }
 

@@ -39,7 +39,7 @@ public class Airspace extends JPanel {
         g2d.drawLine(0, 5, 0, -5);
         g2d.setStroke(new BasicStroke(1));
         for (int i = 0; i < planes.size(); i++) {
-            if (Math.abs(planes.get(i).coords[0]) < 5 && Math.abs(planes.get(i).coords[1]) - 35 < 5) {
+            if (Math.abs(planes.get(i).coords[0]) < 5 && Math.abs(planes.get(i).coords[1]) - 35 < 5 && airport.r.planes.isEmpty()) {
                 planes.get(i).paint(g2d);
                 planes.get(i).toGPlane();
             } else

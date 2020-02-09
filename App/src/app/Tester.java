@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Tester {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Airport jfk = new Airport();
         Airspace space = new Airspace(jfk);
         JFrame frame = setupAirportFrame(jfk);
@@ -34,7 +34,7 @@ public class Tester {
         frame.add(space);
         frame.setAlwaysOnTop(true);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         return frame;
     }
 }

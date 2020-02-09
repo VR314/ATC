@@ -7,13 +7,13 @@ public abstract class Plane {
     public double[] coords;
     public int gate;
     public Airspace airspace;
-    protected double[] target;
     public int id;
-    protected int speed;
-    protected double orientation;
     public Airport airport;
     public int[] pTimes; //{LANDtime, atGatetime, leaveGatetime, TOtime, LEAVEtime}
     public int[] actualTimes;
+    protected double[] target;
+    protected int speed;
+    protected double orientation;
     
     protected abstract void spawn();
     

@@ -72,25 +72,25 @@ public class Airport extends JPanel {
         g2d.setColor(Color.gray);
         for (Rectangle2D d : parts)
             g2d.fill(d);
-
+    
         g2d.setColor(Color.magenta);
         for (Rectangle2D d : parts)
             g2d.draw(d);
-
+    
         g2d.setColor(Color.gray);
         g2d.fill(parts[1]);
         g2d.setColor(Color.magenta);
         g2d.draw(parts[1]);
-
+    
         for (Gate ga : gates)
             ga.paint(g2d);
-
+    
         for (Apron a : aprons)
             a.paint(g2d);
-
+    
         g2d.setColor(Color.black);
         g2d.fill(r.rect);
-
+    
         for (int i = 0; i < planes.size(); i++) {
             //System.out.println(p.toString());
             planes.get(i).paint(g2d);
