@@ -3,7 +3,7 @@ package app;
 import java.awt.*;
 import java.util.Arrays;
 
-public class APlane extends Plane {
+public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
     /**
      * if set to true - APlane will abort takeoff and go around
      */
@@ -142,7 +142,7 @@ public class APlane extends Plane {
     public void paint(Graphics2D g2d) {
         move();
         g2d.drawOval((int) coords[0], (int) coords[1], 5, 5);
-        if (!depart || !goAround) {
+        if (!depart && !goAround) {
             if (mGate == GATE.NORTH) {
                 g2d.drawLine((int) coords[0], (int) coords[1], 0, 35);
             } else if (mGate == GATE.SOUTH) {

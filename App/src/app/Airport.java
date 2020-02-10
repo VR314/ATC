@@ -53,8 +53,7 @@ public class Airport extends JPanel {
     /**
      * Constructor requires no arguments - empty constructor
      */
-    public Airport() {
-    }
+    public Airport() {    }
     
     /**
      * <p>
