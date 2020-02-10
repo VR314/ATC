@@ -41,9 +41,6 @@ public class GPlane extends Plane {
         this.actualTimes = new int[pTimes.length];
         this.actualTimes[0] = (int) time.getMins();
         this.speed = p.speed;
-        if(speed < 100){
-            speed = 150;
-        }
         if (d == Direction.NORTH)
             coords = new double[]{680, -100};
         else
@@ -137,25 +134,23 @@ public class GPlane extends Plane {
                     toAPlane();
                 }
             }
-        } else if (!wait && pastGate) {
+        } else if (!wait) {
             if (actualTimes[2] == 0) {
                 actualTimes[2] = (int) time.getMins();
             }
-
-        }
-
-        if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= speed / 10 * 2) {
-            coords[0] = target[0];
-            coords[1] = target[1];
-            changeTarget();
-        } else {
-            if (speed > 50)
-                speed *= 0.998;
-            coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
-            coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
-            if (coords[0] != airport.r.rect.getCenterX() && !pastGate) {
-                if (airport.r.planes.contains(this))
-                    this.airport.r.planes.remove(this);
+            if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= speed / 10 * 2) {
+                coords[0] = target[0];
+                coords[1] = target[1];
+                changeTarget();
+            } else {
+                if (speed > 50)
+                    speed *= 0.998;
+                coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
+                coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+                if (coords[0] != airport.r.rect.getCenterX() && !pastGate) {
+                    if (airport.r.planes.contains(this))
+                        this.airport.r.planes.remove(this);
+                }
             }
         }
     }
@@ -179,6 +174,7 @@ public class GPlane extends Plane {
                 takingoff = true;
             }
         }
+        System.out.println(this.toString());
     }
     
     @Override
