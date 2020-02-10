@@ -110,11 +110,7 @@ public class GPlane extends Plane {
     
     @Override
     public void move() {
-        if (takingoff) {/*
-            if (index == 4 && pastGate)
-                if (airport.r.planes.size() > 0 && actualTimes[3] == 0)
-                    return;*/
-        
+        if (takingoff) { //TODO: implement waiting/stopping if too close to another plane (ex. waiting for takeoff)
             if (Math.abs(coords[0] - airport.r.rect.getCenterX()) > 5) {
                 target[0] = airport.r.rect.getCenterX();
                 target[1] = coords[1];
@@ -139,7 +135,7 @@ public class GPlane extends Plane {
                 }
             }
         } else if (!wait) {
-            if (actualTimes[2] != 0) {
+            if (actualTimes[2] == 0) {
                 actualTimes[2] = (int) time.getMins();
             }
             if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= speed / 10 * 2) {
@@ -173,9 +169,10 @@ public class GPlane extends Plane {
             orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
             wait = true; //only changed by algorithm
         } else {
-            takingoff = true;
-            if (!airport.r.planes.contains(this))
+            if (!airport.r.planes.contains(this) && airport.r.planes.isEmpty()) {
                 this.airport.r.planes.add(this);
+                takingoff = true;
+            }
         }
         System.out.println(this.toString());
     }

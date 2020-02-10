@@ -11,7 +11,7 @@ public class Airport extends JPanel {
     /**
      * The time in ms to refresh the Airport frame
      */
-    static final int TICK = 30; //in ms to refresh
+    final int TICK = 75; //in ms to refresh
     
     /**
      * The list of planes in the Airport's scope

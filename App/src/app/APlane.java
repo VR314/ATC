@@ -1,7 +1,6 @@
 package app;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class APlane extends Plane {
@@ -60,7 +59,7 @@ public class APlane extends Plane {
         this.mGate = g;
         this.pTimes = p.pTimes;
         this.time = p.time;
-        this.actualTimes = new int[pTimes.length];
+        this.actualTimes = p.actualTimes;
         this.id = p.id;
         coords = new double[]{0, 0};
         this.airport = p.airport;
@@ -116,7 +115,7 @@ public class APlane extends Plane {
                     leaveAirspace();
             }
         } else { //if go-around
-            if (speed > 250)
+            if (speed < 250)
                 speed *= 1.05;
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 100;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
@@ -136,7 +135,7 @@ public class APlane extends Plane {
         actualTimes[4] = (int) time.getMins();
         this.airspace.planes.remove(this);
         System.out.println("APlane #" + id + " has left the airspace");
-        System.out.println(new ArrayList(Arrays.asList(actualTimes)).toString());
+        System.out.println(Arrays.toString(actualTimes));
     }
     
     @Override
