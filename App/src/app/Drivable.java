@@ -10,7 +10,7 @@ public class Drivable {
     protected Rectangle2D rect;
     protected Color color;
     protected boolean fill;
-    protected int[] target;
+    public int[] target;
     
     public Drivable(Rectangle2D rect, int[] target) {
         this.rect = rect;

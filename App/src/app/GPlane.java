@@ -174,7 +174,6 @@ public class GPlane extends Plane {
                 takingoff = true;
             }
         }
-        System.out.println(this.toString());
     }
     
     @Override

@@ -123,7 +123,7 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
                 mGate = GATE.NORTH;
                 target = new double[]{0, 35};
                 goAround = false;
-            } else if (airport.r.planes.isEmpty() && coords[1] < 0) { //TODO: implement distance for go-around, not just y-coord
+            } else if (airport.r.planes.isEmpty() && coords[1] < 0) {
                 mGate = GATE.SOUTH;
                 target = new double[]{0, -35};
                 goAround = false;
