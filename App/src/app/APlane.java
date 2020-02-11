@@ -29,7 +29,7 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
      * @param times    the array of plannedTimes (ETAs)
      */
     public APlane(double a, Airport airport, Airspace airspace, int id, int[] times) { //used by Scenario
-        coords = new double[]{(100 * Math.cos(Math.toRadians(a))), (100 * Math.sin(Math.toRadians(a)))};
+        coords = new double[]{(150 * Math.cos(Math.toRadians(a))), (150 * Math.sin(Math.toRadians(a)))};
         this.airspace = airspace;
         this.airport = airport;
         gate = 1;
@@ -38,9 +38,6 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
         this.actualTimes = new int[pTimes.length];
         speed = 300;
     
-        while (a < 0) {
-            a += 360;
-        }
         if (a < 180) {
             mGate = GATE.NORTH;
         } else {
@@ -75,7 +72,8 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
         //TODO: in algorithm, set gate on spawn
     }
     
-    private void turn() { //TODO: make turning more smooth, gradual
+    private void turn() {
+        double old = orientation;
         if (mGate == GATE.NORTH) {
             orientation = angleOf(coords[0], coords[1], 0, 35);
         } else if (mGate == GATE.SOUTH) {
@@ -83,6 +81,13 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
         }
         
         orientation += 90;
+        
+        if (old > orientation)
+            orientation = (old - orientation) * 0.9 + orientation;
+        else
+            orientation = (orientation - old) * 0.9 + old;
+        
+        
         while (orientation < 0) {
             orientation += 360;
         }

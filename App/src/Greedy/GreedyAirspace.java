@@ -1,7 +1,9 @@
 package Greedy;
 
+import app.APlane;
 import app.Airport;
 import app.Airspace;
+import app.GPlane;
 
 import java.awt.*;
 import java.util.ConcurrentModificationException;
@@ -26,6 +28,22 @@ public class GreedyAirspace extends Airspace {
     @Override
     protected void paintComponent(Graphics g) throws ConcurrentModificationException {
         super.paintComponent(g);
+    
+        boolean allowLAND = true;
+        if (airport.r.planes.size() > 0) {
+            for (GPlane p : airport.planes) {
+                if (p.index == 4 && p.pastGate) {
+                    allowLAND = false;
+                }
+            }
         
+            if (!allowLAND) {
+                for (APlane p : planes) {
+                    p.goAround = true;
+                }
+            }
+        }
+    
+    
     }
 }

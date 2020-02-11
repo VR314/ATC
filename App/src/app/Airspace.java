@@ -42,8 +42,12 @@ public class Airspace extends JPanel {
             if (Math.abs(planes.get(i).coords[0]) < 5 && Math.abs(planes.get(i).coords[1]) - 35 < 5 && airport.r.planes.isEmpty()) {
                 planes.get(i).paint(g2d);
                 planes.get(i).toGPlane();
-            } else
+            } else if (Math.abs(planes.get(i).coords[0]) < 5 && Math.abs(planes.get(i).coords[1]) - 35 < 5) {
                 planes.get(i).paint(g2d);
+                planes.get(i).goAround = true;
+            } else {
+                planes.get(i).paint(g2d);
+            }
         }
         try {
             Thread.sleep(200);

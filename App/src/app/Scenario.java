@@ -7,7 +7,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Scenario implements Runnable {
+//GPlane: time, id, gate, TOdirection, leaveGateTime, TOtime, leaveAirspaceTime
+
+//APlane: time, id, angle, LANDtime, atGateTime, leaveGateTime, TOtime, leaveAirspaceTime
+
+//TODO: implement gate determination, if 0 - algorithm decides
+
+public class Scenario implements Runnable { //TODO: fix spawn times, angles - make realistic
     public Time time;
     HashMap Gs = new HashMap<Integer, GPlane>();
     HashMap As = new HashMap<Integer, APlane>();

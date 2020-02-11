@@ -7,10 +7,10 @@ import java.util.LinkedList;
 public class Drivable {
     public boolean full;
     public LinkedList<GPlane> planes;
+    public int[] target;
     protected Rectangle2D rect;
     protected Color color;
     protected boolean fill;
-    public int[] target;
     
     public Drivable(Rectangle2D rect, int[] target) {
         this.rect = rect;

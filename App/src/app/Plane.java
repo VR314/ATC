@@ -15,6 +15,10 @@ public abstract class Plane {
     protected int speed;
     protected double orientation;
     
+    public static double dist(double[] first, double[] sec) {
+        return Math.hypot(Math.abs((int) (first[0] - sec[0])), Math.abs((int) (first[1] - sec[1])));
+    }
+    
     protected abstract void spawn();
     
     protected abstract void move();

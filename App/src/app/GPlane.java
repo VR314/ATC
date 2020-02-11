@@ -4,12 +4,12 @@ import java.awt.*;
 
 public class GPlane extends Plane {
     public boolean wait = false;
-    int index = 0;
-    private int speed;
+    public boolean go = true;
+    public int index = 0;
+    public boolean pastGate = false;
     private int[] gateCoords;
     private double[][] targets = new double[5][2];
     private Apron a;
-    private boolean pastGate = false;
     private boolean takingoff = false;
     private Direction takeoff; //towards
     private Direction land; //from
@@ -110,7 +110,7 @@ public class GPlane extends Plane {
     
     @Override
     public void move() {
-        if (takingoff) { //TODO: implement waiting/stopping if too close to another plane (ex. waiting for takeoff)
+        if (takingoff) {
             if (Math.abs(coords[0] - airport.r.rect.getCenterX()) > 5) {
                 target[0] = airport.r.rect.getCenterX();
                 target[1] = coords[1];
@@ -134,23 +134,32 @@ public class GPlane extends Plane {
                     toAPlane();
                 }
             }
-        } else if (!wait) {
-            if (actualTimes[2] == 0) {
-                actualTimes[2] = (int) time.getMins();
-            }
-            if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= speed / 10 * 2) {
-                coords[0] = target[0];
-                coords[1] = target[1];
-                changeTarget();
-            } else {
-                if (speed > 50)
-                    speed *= 0.998;
-                coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
-                coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
-                if (coords[0] != airport.r.rect.getCenterX() && !pastGate) {
-                    if (airport.r.planes.contains(this))
-                        this.airport.r.planes.remove(this);
+        } else if (go) {
+            if (!wait) {
+                if (actualTimes[2] == 0)
+                    actualTimes[2] = (int) time.getMins();
+            
+                if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= speed / 10 * 2) {
+                    coords[0] = target[0];
+                    coords[1] = target[1];
+                    changeTarget();
+                } else {
+                    if (speed > 50)
+                        speed *= 0.998;
+                
+                    coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
+                    coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+                
+                    if (coords[0] != airport.r.rect.getCenterX() && !pastGate)
+                        if (airport.r.planes.contains(this))
+                            this.airport.r.planes.remove(this);
+                
                 }
+            }
+        } else {
+            if (airport.r.planes.isEmpty()) {
+                this.airport.r.planes.add(this);
+                takingoff = true;
             }
         }
     }
@@ -169,7 +178,7 @@ public class GPlane extends Plane {
             orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
             wait = true; //only changed by algorithm
         } else {
-            if (!airport.r.planes.contains(this) && airport.r.planes.isEmpty()) {
+            if (airport.r.planes.isEmpty()) {
                 this.airport.r.planes.add(this);
                 takingoff = true;
             }
