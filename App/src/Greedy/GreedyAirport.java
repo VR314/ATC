@@ -6,6 +6,8 @@ import app.GPlane;
 import java.awt.*;
 
 public class GreedyAirport extends Airport {
+    int crashes = 0;
+    int nearMisses = 0;
     
     /**
      * <p>

@@ -79,7 +79,6 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
         } else if (mGate == GATE.SOUTH) {
             orientation = angleOf(coords[0], coords[1], 0, -35);
         }
-        
         orientation += 90;
         
         if (old > orientation)

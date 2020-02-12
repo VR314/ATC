@@ -8,10 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 //GPlane: time, id, gate, TOdirection, leaveGateTime, TOtime, leaveAirspaceTime
-
-//APlane: time, id, angle, LANDtime, atGateTime, leaveGateTime, TOtime, leaveAirspaceTime
-
-//TODO: implement gate determination, if 0 - algorithm decides
+//APlane: time, id, angle, gate, LANDtime, atGateTime, leaveGateTime, TOtime, leaveAirspaceTime
 
 public class Scenario implements Runnable { //TODO: fix spawn times, angles - make realistic
     public Time time;
@@ -70,6 +67,7 @@ public class Scenario implements Runnable { //TODO: fix spawn times, angles - ma
                 } else {
                     int id = Integer.parseInt(line.remove(0).trim());
                     int angle = Integer.parseInt(line.remove(0).trim());
+                    int gate = Integer.parseInt(line.remove(0).trim());
                     int LANDtime = Integer.parseInt(line.remove(0).trim());
                     int atGatetime = Integer.parseInt(line.remove(0).trim());
                     int leaveGatetime = Integer.parseInt(line.remove(0).trim());
@@ -77,6 +75,7 @@ public class Scenario implements Runnable { //TODO: fix spawn times, angles - ma
                     int LEAVEtime = Integer.parseInt(line.remove(0).trim());
                     APlane a = new APlane(angle, airport, airspace, id, new int[]{LANDtime, atGatetime, leaveGatetime, TOtime, LEAVEtime});
                     a.time = this.time;
+                    a.gate = gate;
                     As.put(time, a);
                 }
             }
