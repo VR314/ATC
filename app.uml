@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>app</OriginalElement>
+  <nodes>
+    <node x="405.0" y="0.0">app.Airport</node>
+    <node x="310.8450704225353" y="275.4507042253521">app.APlane</node>
+    <node x="-152.2647887323944" y="273.62253521126763">app.GPlane</node>
+    <node x="74.0" y="0.0">app.Plane</node>
+    <node x="-180.05915492957752" y="3.771830985915358">app.Airspace</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="app.APlane" target="app.Plane">
+      <point x="0.0" y="-91.5" />
+      <point x="275.0" y="274.0" />
+      <point x="233.0" y="274.0" />
+      <point x="53.0" y="124.5" />
+    </edge>
+    <edge source="app.GPlane" target="app.Plane">
+      <point x="0.0" y="-146.5" />
+      <point x="85.0" y="274.0" />
+      <point x="127.0" y="274.0" />
+      <point x="-53.0" y="124.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8275058275058275" x="190.5" y="310.5112676056338" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

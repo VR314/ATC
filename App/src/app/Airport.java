@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Airport extends JPanel {
     
@@ -16,7 +16,7 @@ public class Airport extends JPanel {
     /**
      * The list of planes in the Airport's scope
      */
-    public LinkedList<GPlane> planes = new LinkedList<>();
+    public ArrayList<GPlane> planes = new ArrayList<>();
     
     /**
      * The Runway of the Airport

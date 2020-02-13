@@ -11,7 +11,7 @@ public abstract class Plane {
     public Airport airport;
     public int[] pTimes; //{LANDtime, atGatetime, leaveGatetime, TOtime, LEAVEtime}
     public int[] actualTimes;
-    protected double[] target;
+    public double[] target;
     protected int speed;
     protected double orientation;
     

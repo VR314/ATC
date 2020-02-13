@@ -69,7 +69,6 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
         } else if (mGate == GATE.SOUTH) {
             orientation = 180;
         }
-        //TODO: in algorithm, set gate on spawn
     }
     
     private void turn() {
@@ -121,17 +120,9 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
         } else { //if go-around
             if (speed < 250)
                 speed *= 1.05;
+            orientation = 180 + angleOf(this.coords[0], this.coords[1], 0, 0);
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 100;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
-            if (airport.r.planes.isEmpty() && coords[1] >= 0) {
-                mGate = GATE.NORTH;
-                target = new double[]{0, 35};
-                goAround = false;
-            } else if (airport.r.planes.isEmpty() && coords[1] < 0) {
-                mGate = GATE.SOUTH;
-                target = new double[]{0, -35};
-                goAround = false;
-            }
         }
     }
     
@@ -145,6 +136,11 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
     @Override
     public void paint(Graphics2D g2d) {
         move();
+        if (!airport.r.planes.isEmpty()) {
+            goAround = true;
+        } else if (!depart && Math.abs(coords[0]) < 5 && Math.abs(coords[1]) - 35 < 5) {
+            toGPlane();
+        }
         g2d.drawOval((int) coords[0], (int) coords[1], 5, 5);
         if (!depart && !goAround) {
             if (mGate == GATE.NORTH) {
@@ -172,7 +168,7 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
         }
     }
     
-    enum GATE {
+    public enum GATE {
         NORTH,
         SOUTH,
     }

@@ -3,14 +3,15 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.LinkedList;
 
 public class Airspace extends JPanel {
     /**
      * The list of planes in the Airspace's scope
      */
-    public LinkedList<APlane> planes = new LinkedList<APlane>();
+    public ArrayList<APlane> planes = new ArrayList<>();
+    
     public Airport airport;
     
     /**
@@ -39,15 +40,7 @@ public class Airspace extends JPanel {
         g2d.drawLine(0, 5, 0, -5);
         g2d.setStroke(new BasicStroke(1));
         for (int i = 0; i < planes.size(); i++) {
-            if (Math.abs(planes.get(i).coords[0]) < 5 && Math.abs(planes.get(i).coords[1]) - 35 < 5 && airport.r.planes.isEmpty()) {
                 planes.get(i).paint(g2d);
-                planes.get(i).toGPlane();
-            } else if (Math.abs(planes.get(i).coords[0]) < 5 && Math.abs(planes.get(i).coords[1]) - 35 < 5) {
-                planes.get(i).paint(g2d);
-                planes.get(i).goAround = true;
-            } else {
-                planes.get(i).paint(g2d);
-            }
         }
         try {
             Thread.sleep(200);
