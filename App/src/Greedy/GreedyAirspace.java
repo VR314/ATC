@@ -44,22 +44,24 @@ public class GreedyAirspace extends Airspace {
         }*/
         
         //give priority to the closest APlane to the mGate
+        //TODO: doesn't always work
         if (airport.r.planes.isEmpty() && !planes.isEmpty()) {
             int lowestDist = Integer.MAX_VALUE;
-            APlane closest = null;
-            for (APlane p : planes) {
+            int closest = -1;
+            for(int i = 0; i < planes.size(); i++) {
+                APlane p = planes.get(i);
                 if (APlane.dist(p.coords, new double[]{0, 35}) < lowestDist || Plane.dist(p.coords, new double[]{0, -35}) < lowestDist) {
-                    closest = p;
+                    closest = i;
                 }
             }
-            
-            closest.goAround = false;
-            if (closest.coords[1] >= 0) {
-                closest.mGate = APlane.GATE.NORTH;
-                closest.target = new double[]{0, 35};
+            APlane c = planes.get(closest);;
+            c.goAround = false;
+            if (c.coords[1] >= 0) {
+                c.mGate = APlane.GATE.NORTH;
+                c.target = new double[]{0, 35};
             } else {
-                closest.mGate = APlane.GATE.NORTH;
-                closest.target = new double[]{0, -35};
+                c.mGate = APlane.GATE.NORTH;
+                c.target = new double[]{0, -35};
             }
         }
         

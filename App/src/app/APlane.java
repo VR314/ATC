@@ -101,28 +101,27 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
     
     @Override
     protected void move() {
-        if (!goAround) {
-            if (!depart) {
+        if (!depart) {
+            if(goAround) { //if go-around
+                if (speed < 250)
+                    speed *= 1.05;
+                orientation = 180 + angleOf(this.coords[0], this.coords[1], 0, 0);
+                coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 100;
+                coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
+            } else {
                 turn();
                 coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 100;
                 coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
                 if (speed > 175) {
                     speed *= 0.95;
                 }
-    
-            } else { //if leaving
-                if (speed < 300)
-                    speed *= 1.005;
-                coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
-                if (coords[1] > 200 || coords[1] < -250)
-                    leaveAirspace();
             }
-        } else { //if go-around
-            if (speed < 250)
-                speed *= 1.05;
-            orientation = 180 + angleOf(this.coords[0], this.coords[1], 0, 0);
-            coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 100;
+        } else { //if leaving
+            if (speed < 300)
+                speed *= 1.005;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
+            if (coords[1] > 200 || coords[1] < -250)
+                leaveAirspace();
         }
     }
     
@@ -144,9 +143,9 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
         g2d.drawOval((int) coords[0], (int) coords[1], 5, 5);
         if (!depart && !goAround) {
             if (mGate == GATE.NORTH) {
-                g2d.drawLine((int) coords[0], (int) coords[1], 0, 35);
+                g2d.drawLine((int) coords[0], (int) coords[1], 0, (int)target[1]);
             } else if (mGate == GATE.SOUTH) {
-                g2d.drawLine((int) coords[0], (int) coords[1], 0, -35);
+                g2d.drawLine((int) coords[0], (int) coords[1], 0, (int)target[1]);
             }
         }
     }

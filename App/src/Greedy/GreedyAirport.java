@@ -25,10 +25,10 @@ public class GreedyAirport extends Airport {
             for (int j = i + 1; j < planes.size(); j++) {
                 if (planes.get(i).coords[1] == planes.get(j).coords[1] && Math.abs(planes.get(i).coords[0] - planes.get(j).coords[0]) < 30) {
                     planes.get(i).go = false;
-                    planes.get(j).go = false;
+                    //planes.get(j).go = false;
                 } else {
                     planes.get(i).go = true;
-                    planes.get(j).go = true;
+                    //planes.get(j).go = true;
                 }
             }
         }

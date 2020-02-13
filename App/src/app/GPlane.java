@@ -141,7 +141,6 @@ public class GPlane extends Plane {
             takeoff();
         } else if (go) {
             if (!wait) {
-                
                 //set landed time
                 if (actualTimes[2] == 0)
                     actualTimes[2] = (int) time.getMins();
@@ -151,8 +150,8 @@ public class GPlane extends Plane {
                     coords[0] = target[0];
                     coords[1] = target[1];
                     changeTarget();
-                } else { //normal move
-                    
+                } else {
+                    //normal move
                     if (speed > 50)
                         speed *= 0.998;
                     
@@ -161,13 +160,6 @@ public class GPlane extends Plane {
                 }
             }
             
-        } else {
-            /*//if waiting for runway... set takeoff
-            //TODO: move this to GreedyAirport
-            if (airport.r.planes.isEmpty()) {
-                this.airport.r.planes.add(this);
-                takingoff = true;
-            }*/
         }
     }
     
