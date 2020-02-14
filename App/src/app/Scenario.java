@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-//GPlane: time, id, gate, TOdirection, leaveGateTime, TOtime, leaveAirspaceTime
-//APlane: time, id, angle, gate, LANDtime, atGateTime, leaveGateTime, TOtime, leaveAirspaceTime
+//GPlane: time, type, id, gate, TOdirection, leaveGateTime, TOtime, leaveAirspaceTime
+//APlane: time, type, id, angle, gate, LANDtime, atGateTime, leaveGateTime, TOtime, leaveAirspaceTime
 
 public class Scenario implements Runnable { //TODO: fix spawn times, angles - make realistic
     public Time time;
@@ -42,7 +42,7 @@ public class Scenario implements Runnable { //TODO: fix spawn times, angles - ma
     }
     
     public void setup() {
-        String cvsSplitBy = ";";
+        String cvsSplitBy = ",";
         String sLine = "";
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
             while ((sLine = br.readLine()) != null) {

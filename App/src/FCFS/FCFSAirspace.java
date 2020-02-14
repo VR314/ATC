@@ -3,7 +3,6 @@ package FCFS;
 import app.APlane;
 import app.Airport;
 import app.Airspace;
-import app.GPlane;
 
 import java.awt.*;
 import java.util.ConcurrentModificationException;
@@ -29,10 +28,16 @@ public class FCFSAirspace extends Airspace {
     protected void paintComponent(Graphics g) throws ConcurrentModificationException {
         super.paintComponent(g);
     
-        if (airport.r.planes.size() > 0) {
+        if (!airport.r.planes.isEmpty()) {
             for (APlane p : planes) {
                 if (Math.abs(p.coords[1]) < 50) {
                     p.goAround = true;
+                }
+            }
+        } else {
+            for (APlane p : planes) {
+                if (Math.abs(p.coords[1]) < 50) {
+                    p.goAround = false;
                 }
             }
         }

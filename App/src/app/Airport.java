@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Airport extends JPanel {
+    protected int crashes, nearMisses;
     
     /**
      * The time in ms to refresh the Airport frame
@@ -66,9 +67,35 @@ public class Airport extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+    
+        //check time @ gate, wait for pushback time
+        for (GPlane p : planes) {
+            if (p.wait) {
+                if (p.pTimes[2] <= p.time.getMins()) {
+                    p.wait = false;
+                }
+            }
+        }
+    
+        //check crashes
+        for (int i = 0; i < planes.size(); i++) {
+            for (int j = i + 1; j < planes.size(); j++) {
+                GPlane p = planes.get(i);
+                GPlane p2 = planes.get(j);
+                if ((p.coords[0] == p2.coords[0] && Math.abs(p.coords[1] - p2.coords[1]) < 5) || (p.coords[1] == p2.coords[1] && Math.abs(p.coords[0] - p2.coords[0]) < 5)) { //TODO: fix crashes & near-misses
+                    crashes++;
+                    System.out.println("CRASH: " + p.id + " + " + p2.id);
+                } else if (Math.pow(p.coords[0] - p2.coords[0], 2) + Math.pow(p.coords[1] - p2.coords[1], 2) < 40) {
+                    nearMisses++;
+                    System.out.println("NEARMISS " + p.id + " + " + p2.id);
+                
+                }
+            }
+        }
+    
         Graphics2D g2d = (Graphics2D) g;
         g2d.setTransform(AffineTransform.getTranslateInstance(-150, 0));
-        
+    
         g2d.setColor(Color.gray);
         for (Rectangle2D d : parts)
             g2d.fill(d);

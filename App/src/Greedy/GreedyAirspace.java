@@ -9,8 +9,6 @@ import java.awt.*;
 
 //FIND OUT WHATS GOING ON WITH THE RUNWAY EMPTYING
 public class GreedyAirspace extends Airspace {
-    int crashes = 0;
-    int nearMisses = 0;
 
     public GreedyAirspace(Airport airport) {
         super(airport);
@@ -52,9 +50,10 @@ public class GreedyAirspace extends Airspace {
                 APlane p = planes.get(i);
                 if (APlane.dist(p.coords, new double[]{0, 35}) < lowestDist || Plane.dist(p.coords, new double[]{0, -35}) < lowestDist) {
                     closest = i;
+                    lowestDist = (int) APlane.dist(p.coords, new double[]{0, 35});
                 }
             }
-            APlane c = planes.get(closest);;
+            APlane c = planes.get(closest);
             c.goAround = false;
             if (c.coords[1] >= 0) {
                 c.mGate = APlane.GATE.NORTH;
