@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class GPlane extends Plane {
     public boolean wait = false;
@@ -13,7 +14,7 @@ public class GPlane extends Plane {
     private boolean takingoff = false;
     private Direction takeoff; //towards
     private Direction land; //from
-    
+
     public GPlane(Airport airport, int gate, Direction d, Airspace airspace, int id, int[] times) { //used by Scenario
         takeoff = d;
         this.airport = airport;
@@ -27,7 +28,7 @@ public class GPlane extends Plane {
         coords = new double[]{(double) gateCoords[0], (double) gateCoords[1]};
         this.id = id;
     }
-    
+
     public GPlane(Plane p, Direction d) { //used by toGPlane()
         this.land = d;
         this.time = p.time;
@@ -49,7 +50,7 @@ public class GPlane extends Plane {
         airport.r.planes.add(this);
         System.out.println(this.toString());
     }
-    
+
     public void toGateParts() {
         setApron();
         if (land == Direction.NORTH) {
@@ -62,7 +63,7 @@ public class GPlane extends Plane {
         targets[3] = new double[]{a.rect.getX(), targets[2][1]};
         targets[4] = new double[]{gateCoords[0], gateCoords[1]};
     }
-    
+
     public void toTOParts() {
         if (takeoff == null) {
             takeoff = Direction.SOUTH;
@@ -80,7 +81,7 @@ public class GPlane extends Plane {
         }
         targets[4] = new double[]{airport.r.rect.getCenterX() - 100, targets[3][1]};
     }
-    
+
     private void setApron() {
         switch (gate) {
             case 1:
@@ -99,7 +100,7 @@ public class GPlane extends Plane {
                 break;
         }
     }
-    
+
     @Override
     public void spawn() { //call from algorithm
         target = targets[0];
@@ -107,15 +108,15 @@ public class GPlane extends Plane {
         orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
         this.airport.planes.add(this);
     }
-    
+
     private void takeoff() {
+        this.actualTimes[3] = (int) time.getMins();
         if (Math.abs(coords[0] - airport.r.rect.getCenterX()) > 10) { //taxi onto runway
             target[0] = airport.r.rect.getCenterX();
             target[1] = coords[1];
             coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
         } else {
             coords[0] = airport.r.rect.getCenterX();
-            actualTimes[3] = (int) time.getMins();
             if (takeoff == Direction.NORTH) {
                 orientation = 360;
                 target[1] = 0;
@@ -134,35 +135,38 @@ public class GPlane extends Plane {
             }
         }
     }
-    
+
     @Override
     public void move() {
         if (takingoff) {
             takeoff();
         } else if (go) {
-            if (!wait) {
-                //set landed time
-                if (actualTimes[2] == 0)
-                    actualTimes[2] = (int) time.getMins();
-                
-                //change target when approaching it
-                if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= speed / 10 * 2) {
-                    coords[0] = target[0];
-                    coords[1] = target[1];
-                    changeTarget();
-                } else {
-                    //normal move
-                    if (speed > 50)
-                        speed *= 0.998;
-                    
-                    coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
-                    coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+            //change target when approaching it
+            if (Math.hypot(coords[0] - target[0], coords[1] - target[1]) <= speed / 10 * 2) {
+                coords[0] = target[0];
+                coords[1] = target[1];
+                changeTarget();
+            } else {
+                //normal move
+                if (speed > 50)
+                    speed *= 0.998;
+
+                coords[0] += Math.cos(Math.toRadians(orientation - 90)) * speed / 10;
+                coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 10;
+            }
+        }
+
+        for (GPlane p : airport.planes) {
+            if (this.id != p.id) {
+                if (dist(this.coords, p.coords) < 10) {
+                    airport.crashes++;
+                    System.out.println(this.id + " AND " + p.id + " CRASH\n" + Arrays.toString(this.coords) + " & " + Arrays.toString(p.coords));
                 }
             }
-            
         }
+
     }
-    
+
     private void changeTarget() {
         if (index < 4) {
             if (airport.r.planes.contains(this))
@@ -170,10 +174,10 @@ public class GPlane extends Plane {
             target = targets[++index];
             orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
         } else if (index == 4 && !pastGate) {
-            actualTimes[1] = (int) time.getMins();
             toTOParts();
             index = 0;
             pastGate = true;
+            actualTimes[1] = (int) time.getMins();
             orientation = 90 + angleOf(coords[0], coords[1], target[0], target[1]);
             wait = true; //only changed by algorithm, when time is past leaveGate
         } else if (pastGate && index == 4) {
@@ -184,14 +188,14 @@ public class GPlane extends Plane {
         }
         System.out.println(this.toString());
     }
-    
+
     @Override
     public void paint(Graphics2D g2d) {
         move();
         g2d.setColor(Color.green);
         g2d.fillOval((int) coords[0], (int) coords[1], 5, 5);
     }
-    
+
     @Override
     public String toString() {
         return "GPlane #" + id + ": {" + coords[0] + ", " + coords[1] +
@@ -200,7 +204,7 @@ public class GPlane extends Plane {
                 "}\n\tgate: " + gate + " (" + gateCoords[0] + ", " + gateCoords[1] + ")" +
                 "\n\t index: " + index;
     }
-    
+
     public void toAPlane() {
         airport.planes.remove(this);
         airport.r.planes.remove(this);
@@ -209,7 +213,7 @@ public class GPlane extends Plane {
         else
             new APlane(this, APlane.GATE.SOUTH);
     }
-    
+
     enum Direction {
         NORTH, //from north LAND, TOWARDS NORTH T/O
         SOUTH

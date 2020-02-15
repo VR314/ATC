@@ -3,6 +3,9 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
@@ -48,5 +51,28 @@ public class Airspace extends JPanel {
             e.printStackTrace();
         }
         repaint();
+    }
+
+    public void end() {
+        System.out.println(airport.crashes + " crashes");
+        this.removeAll();
+    }
+
+    public void writePlane(APlane a) {
+        try (FileWriter writer = new FileWriter("Fscen3.csv", true)) {
+            BufferedWriter br = new BufferedWriter(writer);
+            br.append(a.id + ",");
+
+            for (int i = 0; i < a.actualTimes.length; i++) {
+                br.append((a.actualTimes[i]) + ","); //prints the difference between the actual and predicted times - positive = late
+            }
+            br.newLine();
+            br.flush();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

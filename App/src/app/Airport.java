@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Airport extends JPanel {
-    protected int crashes, nearMisses;
+    public int crashes;
     
     /**
      * The time in ms to refresh the Airport frame
@@ -71,14 +71,22 @@ public class Airport extends JPanel {
         //check time @ gate, wait for pushback time
         for (GPlane p : planes) {
             if (p.wait) {
-                if (p.pTimes[2] <= p.time.getMins()) {
+                if (p.actualTimes[2] + 20 <= (int) p.time.getMins()) { //enforces 20 min turnover time
                     p.wait = false;
+                    p.actualTimes[2] = (int) p.time.getMins();
                 }
             }
         }
-    
-        //check crashes
+
+        //check stoppage
         for (int i = 0; i < planes.size(); i++) {
+            for (int j = i + 1; j < planes.size(); j++) {
+                planes.get(i).go = planes.get(i).coords[1] != planes.get(j).coords[1] || !(Math.abs(planes.get(i).coords[0] - planes.get(j).coords[0]) < 30);
+            }
+        }
+
+        //check crashes
+        /*for (int i = 0; i < planes.size(); i++) {
             for (int j = i + 1; j < planes.size(); j++) {
                 GPlane p = planes.get(i);
                 GPlane p2 = planes.get(j);
@@ -91,7 +99,7 @@ public class Airport extends JPanel {
                 
                 }
             }
-        }
+        }*/
     
         Graphics2D g2d = (Graphics2D) g;
         g2d.setTransform(AffineTransform.getTranslateInstance(-150, 0));

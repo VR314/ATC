@@ -117,8 +117,8 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
                 }
             }
         } else { //if leaving
-            if (speed < 300)
-                speed *= 1.005;
+            if (speed < 400)
+                speed *= 1.05;
             coords[1] += Math.sin(Math.toRadians(orientation - 90)) * speed / 100;
             if (coords[1] > 200 || coords[1] < -250)
                 leaveAirspace();
@@ -127,9 +127,14 @@ public class APlane extends Plane { //TODO: DEBUG LANDING - land set to null?
     
     private void leaveAirspace() {
         actualTimes[4] = (int) time.getMins();
+        airspace.writePlane(this);
         this.airspace.planes.remove(this);
         System.out.println("APlane #" + id + " has left the airspace");
         System.out.println(Arrays.toString(actualTimes));
+        if (airspace.planes.isEmpty() && airport.planes.isEmpty()) {
+            System.out.println("Crashes: " + airport.crashes);
+            airspace.end();
+        }
     }
     
     @Override

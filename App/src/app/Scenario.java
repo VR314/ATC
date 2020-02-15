@@ -7,14 +7,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-//GPlane: time, type, id, gate, TOdirection, leaveGateTime, TOtime, leaveAirspaceTime
-//APlane: time, type, id, angle, gate, LANDtime, atGateTime, leaveGateTime, TOtime, leaveAirspaceTime
+//GPlane: time, type, id, gate, TOdirection, TOtime, leaveAirspaceTime
+//APlane: time, type, id, angle, gate, LANDtime, atGateTime, TOtime, leaveAirspaceTime
 
 public class Scenario implements Runnable { //TODO: fix spawn times, angles - make realistic
     public Time time;
     HashMap Gs = new HashMap<Integer, GPlane>();
     HashMap As = new HashMap<Integer, APlane>();
-    private String filepath = "App\\src\\app\\scenarios.csv";
+    private String filepath = "App\\src\\app\\scenarios3.csv";
     private Airport airport;
     private Airspace airspace;
     
@@ -57,7 +57,7 @@ public class Scenario implements Runnable { //TODO: fix spawn times, angles - ma
                     } else {
                         d = GPlane.Direction.SOUTH;
                     }
-                    int leaveGateTime = Integer.parseInt(line.remove(0).trim());
+                    int leaveGateTime = time + 20;
                     int TOtime = Integer.parseInt(line.remove(0).trim());
                     int LEAVEtime = Integer.parseInt(line.remove(0).trim());
                     GPlane g = new GPlane(airport, gate, d, airspace, id, new int[]{-100, time, leaveGateTime, TOtime, LEAVEtime}); //NEGATIVE = NULL
@@ -70,7 +70,7 @@ public class Scenario implements Runnable { //TODO: fix spawn times, angles - ma
                     int gate = Integer.parseInt(line.remove(0).trim());
                     int LANDtime = Integer.parseInt(line.remove(0).trim());
                     int atGatetime = Integer.parseInt(line.remove(0).trim());
-                    int leaveGatetime = Integer.parseInt(line.remove(0).trim());
+                    int leaveGatetime = atGatetime + 20;
                     int TOtime = Integer.parseInt(line.remove(0).trim());
                     int LEAVEtime = Integer.parseInt(line.remove(0).trim());
                     APlane a = new APlane(angle, airport, airspace, id, new int[]{LANDtime, atGatetime, leaveGatetime, TOtime, LEAVEtime});
